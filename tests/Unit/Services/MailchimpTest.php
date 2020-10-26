@@ -16,10 +16,10 @@ class MailchimpTest extends Test
     {
         parent::setUp();
 
-        $this->mailchimp = new Mailchimp([
-            'apiKey' => $_ENV['MAILCHIMP_API_KEY'],
-            'server' => $_ENV['MAILCHIMP_SERVER']
-        ]);
+        $this->mailchimp = $this->createMock(Mailchimp::class);
+        $this->mailchimp
+            ->method('checkConnection')
+            ->willReturn(true);
     }
 
     /**

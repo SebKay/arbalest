@@ -19,6 +19,6 @@ class Mailchimp extends Service
 
     public function checkConnection(): bool
     {
-        return ($this->service->getHost() ? true : false);
+        return ($this->service->getUsername() ? true : false);
     }
 }

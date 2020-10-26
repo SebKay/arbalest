@@ -16,12 +16,12 @@ class ArbalestTest extends Test
     {
         parent::setUp();
 
-        $this->arbalest = new Arbalest(
-            new Mailchimp([
-                'apiKey' => $_ENV['MAILCHIMP_API_KEY'],
-                'server' => $_ENV['MAILCHIMP_SERVER']
-            ])
-        );
+        $mailchimp = $this->createMock(Mailchimp::class);
+        $mailchimp
+            ->method('checkConnection')
+            ->willReturn(true);
+
+        $this->arbalest = new Arbalest($mailchimp);
     }
 
     /**

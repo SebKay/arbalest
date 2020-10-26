@@ -37,5 +37,5 @@ abstract class Service
     /**
      * Check the service is working
      */
-    public abstract function checkConnection(): bool;
+    abstract public function checkConnection(): bool;
 }
