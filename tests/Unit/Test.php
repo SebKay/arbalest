@@ -8,6 +8,7 @@ abstract class Test extends TestCase
 {
     public function setUp(): void
     {
-        // Add global setup here
+        //---- Load environment variables
+        \Dotenv\Dotenv::createImmutable(__DIR__, '../../.tests.env')->load();
     }
 }
