@@ -2,12 +2,17 @@
 
 namespace Arbalest\Services;
 
-abstract class Service implements ServiceInterface
+abstract class Service
 {
     /**
      * @var array
      */
     protected $config;
+
+    /**
+     * @var mixed
+     */
+    protected $service;
 
     /**
      * Setup
@@ -28,4 +33,9 @@ abstract class Service implements ServiceInterface
     {
         return $this->config;
     }
+
+    /**
+     * Check the service is working
+     */
+    protected abstract function checkConnection();
 }

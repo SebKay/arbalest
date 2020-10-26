@@ -2,21 +2,21 @@
 
 namespace Arbalest;
 
-use Arbalest\Services\ServiceInterface;
+use Arbalest\Services\Service;
 
-class Mail
+class Arbalest
 {
     /**
-     * @var ServiceInterface
+     * @var Service
      */
     protected $service;
 
     /**
      * Set up
      *
-     * @param ServiceInterface $service
+     * @param Service $service
      */
-    public function __construct(ServiceInterface $service)
+    public function __construct(Service $service)
     {
         $this->service = $service;
     }
