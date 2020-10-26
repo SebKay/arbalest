@@ -2,6 +2,8 @@
 
 namespace Arbalest\Services;
 
+use MailchimpMarketing\Api\PingApi;
+
 class Mailchimp extends Service
 {
     /**
@@ -19,6 +21,8 @@ class Mailchimp extends Service
 
     public function checkConnection(): bool
     {
-        return ($this->service->getUsername() ? true : false);
+        $ping = new PingApi($this->service);
+
+        return ($ping->get() ? true : false);
     }
 }
