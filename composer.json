@@ -30,6 +30,7 @@
         "phpcs" : "./vendor/bin/phpcs --standard=PSR12 ./src",
         "phpcbf": "./vendor/bin/phpcbf --standard=PSR12 src",
         "psalm" : "./vendor/bin/psalm",
-        "phpunit" : "./vendor/bin/phpunit --colors=always --testdox"
+        "phpunit" : "./vendor/bin/phpunit --colors=always --testdox",
+        "phpunit:coverage" : "./vendor/bin/phpunit --colors=always --coverage-html coverage"
     }
 }
