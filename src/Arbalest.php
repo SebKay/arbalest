@@ -44,6 +44,6 @@ class Arbalest
     {
         // TODO: Unsubscribe email address to service
 
-        return false;
+        return true;
     }
 }
