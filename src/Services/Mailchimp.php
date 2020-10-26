@@ -9,7 +9,7 @@ class Mailchimp extends Service
      */
     protected $service;
 
-    public function __construct($config)
+    public function __construct(array $config)
     {
         $this->config = $config;
 
@@ -17,8 +17,8 @@ class Mailchimp extends Service
         $this->service->setConfig($this->getConfig());
     }
 
-    protected function checkConnection()
+    public function checkConnection(): bool
     {
-        return $this->service->getHost();
+        return ($this->service->getHost() ? true : false);
     }
 }

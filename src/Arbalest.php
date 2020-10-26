@@ -25,21 +25,25 @@ class Arbalest
      * Subscribe an email address to the configured service
      *
      * @param string $email_address
-     * @return void
+     * @return bool
      */
-    public function subscribe(string $email_address)
+    public function subscribe(string $email_address): bool
     {
         // TODO: Subscribe email address to service
+
+        return true;
     }
 
     /**
      * Unsubscribe an email address from the configured service
      *
      * @param string $email_address
-     * @return void
+     * @return bool
      */
-    public function unsubscribe(string $email_address)
+    public function unsubscribe(string $email_address): bool
     {
         // TODO: Unsubscribe email address to service
+
+        return false;
     }
 }

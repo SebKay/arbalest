@@ -19,7 +19,7 @@ abstract class Service
      *
      * @param array $config
      */
-    public function __construct($config)
+    public function __construct(array $config)
     {
         $this->config = $config;
     }
@@ -37,5 +37,5 @@ abstract class Service
     /**
      * Check the service is working
      */
-    protected abstract function checkConnection();
+    public abstract function checkConnection(): bool;
 }
