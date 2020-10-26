@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Services;
 
-use Arbalest\Services\Mailchimp;
+use \Tests\Unit\Test;
 
 class ServiceTest extends Test
 {
     /**
-     * @var Mailchimp
+     * @var Arbalest\Services\Service
      */
     protected $service;
 

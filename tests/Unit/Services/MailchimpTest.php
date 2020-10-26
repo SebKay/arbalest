@@ -1,7 +1,8 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Services;
 
+use \Tests\Unit\Test;
 use Arbalest\Services\Mailchimp;
 
 class MailchimpTest extends Test
