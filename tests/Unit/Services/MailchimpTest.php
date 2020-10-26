@@ -4,7 +4,7 @@ namespace Tests\Unit;
 
 use Arbalest\Services\Mailchimp;
 
-class ServiceTest extends Test
+class MailchimpTest extends Test
 {
     /**
      * @var Mailchimp
@@ -19,14 +19,6 @@ class ServiceTest extends Test
             'apiKey' => $_ENV['MAILCHIMP_API_KEY'],
             'server' => $_ENV['MAILCHIMP_SERVER']
         ]);
-    }
-
-    /**
-     * @test
-     */
-    public function test_config_is_an_array()
-    {
-        $this->assertIsArray($this->mailchimp->getConfig());
     }
 
     /**
