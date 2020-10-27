@@ -7,6 +7,8 @@ use MailchimpMarketing\Api\PingApi;
 
 class Mailchimp extends Service
 {
+    protected const GENERIC_ERROR_MESSAGE = 'Sorry, there was an unexpected error with the Mailchimp API.';
+
     /**
      * @var \MailchimpMarketing\Configuration
      */
@@ -66,10 +68,10 @@ class Mailchimp extends Service
             $error    = ($response ? json_decode($response->getBody()->getContents()) : null);
 
             if (!$error) {
-                throw new \Exception('Sorry, there was an unexpected error.');
+                throw new \Exception(self::GENERIC_ERROR_MESSAGE);
             }
 
-            throw new \Exception($error->detail, $error->status);
+            throw new \Exception('Mailchimp error: ' . $error->detail, $error->status);
         }
     }
 
@@ -94,10 +96,10 @@ class Mailchimp extends Service
             $error    = ($response ? json_decode($response->getBody()->getContents()) : null);
 
             if (!$error) {
-                throw new \Exception('Sorry, there was an unexpected error.');
+                throw new \Exception(self::GENERIC_ERROR_MESSAGE);
             }
 
-            throw new \Exception($error->detail, $error->status);
+            throw new \Exception('Mailchimp error: ' . $error->detail, $error->status);
         }
     }
 }
