@@ -8,7 +8,7 @@ use MailchimpMarketing\Api\PingApi;
 class Mailchimp extends Service
 {
     /**
-     * @var \MailchimpMarketing\Configuration 
+     * @var \MailchimpMarketing\Configuration
      */
     protected $service;
 
@@ -18,11 +18,11 @@ class Mailchimp extends Service
     protected $lists_api;
 
     /**
-     * @var int
+     * @var string
      */
     protected $list_id;
 
-    public function __construct(array $config, int $list_id)
+    public function __construct(array $config, string $list_id)
     {
         $this->config = $config;
 
@@ -54,11 +54,23 @@ class Mailchimp extends Service
      */
     public function subscribe(string $email_address): bool
     {
-        $body = [
-            'email_address' => $email_address
-        ];
+        try {
+            $this->lists_api->addListMember($this->list_id, [
+                'status'        => 'subscribed',
+                'email_address' => $email_address
+            ]);
 
-        return ($this->lists_api->addListMember($this->list_id, $body) ? true : false);
+            return true;
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $response = $e->getResponse();
+            $error    = ($response ? json_decode($response->getBody()->getContents()) : null);
+
+            if (!$error) {
+                throw new \Exception('Sorry, there was an unexpected error.');
+            }
+
+            throw new \Exception($error->detail, $error->status);
+        }
     }
 
     /**
@@ -69,10 +81,23 @@ class Mailchimp extends Service
      */
     public function unsubscribe(string $email_address): bool
     {
-        $subscribe_hash = strtolower(
+        $subscriber_hash = strtolower(
             md5($email_address)
         );
 
-        return ($this->lists_api->deleteListMemberWithHttpInfo($this->list_id, $subscribe_hash) ? true : false);
+        try {
+            $this->lists_api->deleteListMemberWithHttpInfo($this->list_id, $subscriber_hash);
+
+            return true;
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $response = $e->getResponse();
+            $error    = ($response ? json_decode($response->getBody()->getContents()) : null);
+
+            if (!$error) {
+                throw new \Exception('Sorry, there was an unexpected error.');
+            }
+
+            throw new \Exception($error->detail, $error->status);
+        }
     }
 }
