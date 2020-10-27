@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use Arbalest\Arbalest;
-use Arbalest\Services\Mailchimp;
 use Arbalest\Services\Service;
 
 class ArbalestTest extends Test
@@ -28,17 +27,11 @@ class ArbalestTest extends Test
         $this->arbalest = new Arbalest($generic_service);
     }
 
-    /**
-     * @test
-     */
     public function test_subscribe_returns_true()
     {
         $this->assertTrue($this->arbalest->subscribe('test@test.com'));
     }
 
-    /**
-     * @test
-     */
     public function test_unsubscribe_returns_true()
     {
         $this->assertTrue($this->arbalest->unsubscribe('test@test.com'));

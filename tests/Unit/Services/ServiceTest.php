@@ -18,9 +18,6 @@ class ServiceTest extends Test
         $this->service = $this->getMockForAbstractClass('Arbalest\Services\Service', [['key' => 'value']]);
     }
 
-    /**
-     * @test
-     */
     public function test_config_is_an_array()
     {
         $this->assertIsArray($this->service->getConfig());

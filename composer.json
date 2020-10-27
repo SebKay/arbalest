@@ -18,7 +18,8 @@
     "require" : {
         "php" : ">=7.2",
         "mailchimp/marketing": "^3.0",
-        "vlucas/phpdotenv": "^5.2"
+        "vlucas/phpdotenv": "^5.2",
+        "fzaninotto/faker": "^1.9"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.5",
