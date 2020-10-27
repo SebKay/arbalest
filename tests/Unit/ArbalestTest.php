@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use Arbalest\Arbalest;
 use Arbalest\Services\Mailchimp;
+use Arbalest\Services\Service;
 
 class ArbalestTest extends Test
 {
@@ -16,12 +17,15 @@ class ArbalestTest extends Test
     {
         parent::setUp();
 
-        $mailchimp = $this->createMock(Mailchimp::class);
-        $mailchimp
-            ->method('checkConnection')
+        $generic_service = $this->createMock(Service::class);
+        $generic_service
+            ->method('subscribe')
+            ->willReturn(true);
+        $generic_service
+            ->method('unsubscribe')
             ->willReturn(true);
 
-        $this->arbalest = new Arbalest($mailchimp);
+        $this->arbalest = new Arbalest($generic_service);
     }
 
     /**

@@ -2,7 +2,9 @@
 
 namespace Arbalest\Services;
 
-abstract class Service
+use Arbalest\SubscribableInterface;
+
+abstract class Service implements SubscribableInterface
 {
     /**
      * @var array
@@ -14,11 +16,6 @@ abstract class Service
      */
     protected $service;
 
-    /**
-     * Setup
-     *
-     * @param array $config
-     */
     public function __construct(array $config)
     {
         $this->config = $config;
@@ -34,8 +31,9 @@ abstract class Service
         return $this->config;
     }
 
-    /**
-     * Check the service is working
-     */
     abstract public function checkConnection(): bool;
+
+    abstract public function subscribe(string $email_address): bool;
+
+    abstract public function unsubscribe(string $email_address): bool;
 }
