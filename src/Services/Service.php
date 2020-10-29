@@ -32,8 +32,4 @@ abstract class Service implements SubscribableInterface
     }
 
     abstract public function checkConnection(): bool;
-
-    abstract public function subscribe(string $email_address): bool;
-
-    abstract public function unsubscribe(string $email_address): bool;
 }

@@ -2,7 +2,8 @@
 
 namespace Arbalest\Services;
 
-use Arbalest\GuzzleClientExceptionHandler;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\RequestException;
 use MailchimpMarketing\Api\ListsApi;
 use MailchimpMarketing\Api\PingApi;
 
@@ -51,7 +52,7 @@ class Mailchimp extends Service
      * Subscribe user to a list
      *
      * @param string $email_address
-     * @return boolean
+     * @return bool
      */
     public function subscribe(string $email_address): bool
     {
@@ -62,18 +63,16 @@ class Mailchimp extends Service
             ]);
 
             return true;
-        } catch (\GuzzleHttp\Exception\ClientException $e) {
-            GuzzleClientExceptionHandler::response($e->getResponse());
+        } catch (\Exception $e) {
+            throw $e;
         }
-
-        return false;
     }
 
     /**
      * Unsubscribe user from a list
      *
      * @param string $email_address
-     * @return boolean
+     * @return bool
      */
     public function unsubscribe(string $email_address): bool
     {
@@ -85,10 +84,8 @@ class Mailchimp extends Service
             $this->lists_api->deleteListMemberWithHttpInfo($this->list_id, $subscriber_hash);
 
             return true;
-        } catch (\GuzzleHttp\Exception\ClientException $e) {
-            GuzzleClientExceptionHandler::response($e->getResponse());
+        } catch (\Exception $e) {
+            throw $e;
         }
-
-        return false;
     }
 }

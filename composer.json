@@ -30,7 +30,7 @@
         "refresh" : "git clean -xffd && composer install --ansi",
         "phpcs" : "./vendor/bin/phpcs --standard=PSR12 ./src",
         "phpcbf": "./vendor/bin/phpcbf --standard=PSR12 src",
-        "psalm" : "./vendor/bin/psalm",
+        "psalm" : "./vendor/bin/psalm --show-info=true",
         "phpunit" : "./vendor/bin/phpunit --colors=always --testdox",
         "phpunit:coverage" : "./vendor/bin/phpunit --colors=always --coverage-html coverage"
     }
