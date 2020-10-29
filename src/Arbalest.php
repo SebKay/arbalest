@@ -2,9 +2,10 @@
 
 namespace Arbalest;
 
+use Arbalest\Interfaces\Subscribable;
 use Arbalest\Services\Service;
 
-class Arbalest implements SubscribableInterface
+class Arbalest implements Subscribable
 {
     /**
      * @var Service

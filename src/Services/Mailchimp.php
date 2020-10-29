@@ -2,8 +2,6 @@
 
 namespace Arbalest\Services;
 
-use GuzzleHttp\Psr7;
-use GuzzleHttp\Exception\RequestException;
 use MailchimpMarketing\Api\ListsApi;
 use MailchimpMarketing\Api\PingApi;
 

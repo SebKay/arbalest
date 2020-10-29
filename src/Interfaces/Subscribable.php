@@ -1,8 +1,8 @@
 <?php
 
-namespace Arbalest;
+namespace Arbalest\Interfaces;
 
-interface SubscribableInterface
+interface Subscribable
 {
     public function subscribe(string $email_address): bool;
 
