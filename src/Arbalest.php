@@ -4,8 +4,9 @@ namespace Arbalest;
 
 use Arbalest\Interfaces\Subscribable;
 use Arbalest\Services\Service;
+use Arbalest\Values\EmailAddress;
 
-class Arbalest implements Subscribable
+class Arbalest
 {
     /**
      * @var Service
@@ -30,7 +31,9 @@ class Arbalest implements Subscribable
      */
     public function subscribe(string $email_address): bool
     {
-        return $this->service->subscribe($email_address);
+        return $this->service->subscribe(
+            new EmailAddress($email_address)
+        );
     }
 
     /**
@@ -41,6 +44,8 @@ class Arbalest implements Subscribable
      */
     public function unsubscribe(string $email_address): bool
     {
-        return $this->service->unsubscribe($email_address);
+        return $this->service->unsubscribe(
+            new EmailAddress($email_address)
+        );
     }
 }

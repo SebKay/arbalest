@@ -3,6 +3,7 @@
 namespace Tests\Unit\Services;
 
 use Arbalest\Services\Mailchimp;
+use Arbalest\Values\EmailAddress;
 use \Tests\Unit\Test;
 
 class MailchimpTest extends Test
@@ -29,7 +30,7 @@ class MailchimpTest extends Test
 
     public function test_subscribe_is_successful()
     {
-        $email = $this->faker->email;
+        $email = new EmailAddress($this->faker->email);
 
         $this->assertTrue($this->mailchimp_service->subscribe($email));
 
@@ -39,7 +40,7 @@ class MailchimpTest extends Test
     /**
      * @depends test_subscribe_is_successful
      */
-    public function test_subscribe_throws_error_when_already_subscribed(string $email)
+    public function test_subscribe_throws_error_when_already_subscribed(EmailAddress $email)
     {
         $this->expectException('\Exception');
 
@@ -49,7 +50,7 @@ class MailchimpTest extends Test
     /**
      * @depends test_subscribe_is_successful
      */
-    public function test_unsubscribe_returns_true(string $email)
+    public function test_unsubscribe_returns_true(EmailAddress $email)
     {
         $this->assertTrue($this->mailchimp_service->unsubscribe($email));
     }
@@ -57,7 +58,7 @@ class MailchimpTest extends Test
     /**
      * @depends test_subscribe_is_successful
      */
-    public function test_unsubscribe_throws_error_when_already_unsubscribed(string $email)
+    public function test_unsubscribe_throws_error_when_already_unsubscribed(EmailAddress $email)
     {
         $this->expectException('\Exception');
 

@@ -2,6 +2,7 @@
 
 namespace Arbalest\Services;
 
+use Arbalest\Values\EmailAddress;
 use MailchimpMarketing\Api\ListsApi;
 use MailchimpMarketing\Api\PingApi;
 
@@ -49,15 +50,15 @@ class Mailchimp extends Service
     /**
      * Subscribe user to a list
      *
-     * @param string $email_address
+     * @param EmailAddress $email_address
      * @return bool
      */
-    public function subscribe(string $email_address): bool
+    public function subscribe(EmailAddress $email_address): bool
     {
         try {
             $this->lists_api->addListMember($this->list_id, [
                 'status'        => 'subscribed',
-                'email_address' => $email_address
+                'email_address' => $email_address->get()
             ]);
 
             return true;
@@ -69,13 +70,13 @@ class Mailchimp extends Service
     /**
      * Unsubscribe user from a list
      *
-     * @param string $email_address
+     * @param EmailAddress $email_address
      * @return bool
      */
-    public function unsubscribe(string $email_address): bool
+    public function unsubscribe(EmailAddress $email_address): bool
     {
         $subscriber_hash = strtolower(
-            md5($email_address)
+            md5($email_address->get())
         );
 
         try {
