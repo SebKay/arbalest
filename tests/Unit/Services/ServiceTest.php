@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Services;
 
+use Arbalest\Values\MailchimpConfig;
 use \Tests\Unit\Test;
 
 class ServiceTest extends Test
@@ -15,11 +16,30 @@ class ServiceTest extends Test
     {
         parent::setUp();
 
-        $this->service = $this->getMockForAbstractClass('Arbalest\Services\Service', [['key' => 'value']]);
+        $service_config = $this->getMockForAbstractClass(
+            \Arbalest\Values\ServiceConfig::class,
+            [
+                [
+                    'key' => 'value'
+                ]
+            ]
+        );
+
+        $this->service = $this->getMockForAbstractClass(
+            'Arbalest\Services\Service',
+            [
+                $service_config
+            ]
+        );
+    }
+
+    public function test_config_is_an_ServiceConfig_object()
+    {
+        $this->assertInstanceOf(\Arbalest\Values\ServiceConfig::class, $this->service->config());
     }
 
     public function test_config_is_an_array()
     {
-        $this->assertIsArray($this->service->getConfig());
+        $this->assertIsArray($this->service->config()->get());
     }
 }

@@ -3,11 +3,12 @@
 namespace Arbalest\Services;
 
 use Arbalest\Interfaces\Subscribable;
+use Arbalest\Values\ServiceConfig;
 
 abstract class Service implements Subscribable
 {
     /**
-     * @var array
+     * @var ServiceConfig
      */
     protected $config;
 
@@ -16,7 +17,7 @@ abstract class Service implements Subscribable
      */
     protected $service;
 
-    public function __construct(array $config)
+    public function __construct(ServiceConfig $config)
     {
         $this->config = $config;
     }
@@ -24,9 +25,9 @@ abstract class Service implements Subscribable
     /**
      * Get configuration options
      *
-     * @return array
+     * @return ServiceConfig
      */
-    public function getConfig(): array
+    public function config(): ServiceConfig
     {
         return $this->config;
     }

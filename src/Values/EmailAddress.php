@@ -2,7 +2,9 @@
 
 namespace Arbalest\Values;
 
-class EmailAddress
+use Arbalest\Interfaces\ValueObject;
+
+class EmailAddress implements ValueObject
 {
     /**
      * @var string
@@ -14,7 +16,7 @@ class EmailAddress
         $this->value = $value;
 
         if (!\filter_var($this->value, \FILTER_VALIDATE_EMAIL)) {
-            throw new \Exception('The email address provided is invalid');
+            throw new \InvalidArgumentException('The email address provided is invalid');
         }
     }
 

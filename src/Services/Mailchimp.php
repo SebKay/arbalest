@@ -3,6 +3,8 @@
 namespace Arbalest\Services;
 
 use Arbalest\Values\EmailAddress;
+use Arbalest\Values\MailchimpConfig;
+use Arbalest\Values\ServiceConfig;
 use MailchimpMarketing\Api\ListsApi;
 use MailchimpMarketing\Api\PingApi;
 
@@ -23,14 +25,14 @@ class Mailchimp extends Service
      */
     protected $list_id;
 
-    public function __construct(array $config, string $list_id)
+    public function __construct(MailchimpConfig $config)
     {
         $this->config = $config;
 
-        $this->list_id = $list_id;
+        $this->list_id = $this->config->get()['list_id'];
 
         $this->service = new \MailchimpMarketing\ApiClient();
-        $this->service->setConfig($this->getConfig());
+        $this->service->setConfig($this->config()->get());
 
         $this->lists_api = new ListsApi($this->service);
     }
