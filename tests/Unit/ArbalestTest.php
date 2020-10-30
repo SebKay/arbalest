@@ -27,12 +27,20 @@ class ArbalestTest extends Test
         $this->arbalest = new Arbalest($generic_service);
     }
 
-    public function test_subscribe_returns_true()
+    /**
+     * @test
+     * @testdox It's subscribe() method returns true
+     */
+    public function its_subscribe_method_returns_true()
     {
         $this->assertTrue($this->arbalest->subscribe('test@test.com'));
     }
 
-    public function test_unsubscribe_returns_true()
+    /**
+     * @test
+     * @testdox It's unsubscribe() method returns true
+     */
+    public function its_unsubscribe_method_returns_true()
     {
         $this->assertTrue($this->arbalest->unsubscribe('test@test.com'));
     }

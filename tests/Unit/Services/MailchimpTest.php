@@ -27,12 +27,20 @@ class MailchimpTest extends Test
         );
     }
 
-    public function test_connection_can_be_established()
+    /**
+     * @test
+     * @testdox It's connection to the API was successful
+     */
+    public function its_connection_to_the_api_worked()
     {
         $this->assertTrue($this->mailchimp_service->checkConnection());
     }
 
-    public function test_subscribe_is_successful()
+    /**
+     * @test
+     * @testdox It's subscribe() method returns true
+     */
+    public function its_subscribe_method_returns_true()
     {
         $email = new EmailAddress($this->faker->email);
 
@@ -42,9 +50,11 @@ class MailchimpTest extends Test
     }
 
     /**
-     * @depends test_subscribe_is_successful
+     * @test
+     * @depends its_subscribe_method_returns_true
+     * @testdox It throws an error when email address is already subscribed
      */
-    public function test_subscribe_throws_error_when_already_subscribed(EmailAddress $email)
+    public function it_throws_error_when_already_subscribed(EmailAddress $email)
     {
         $this->expectException('\Exception');
 
@@ -52,17 +62,21 @@ class MailchimpTest extends Test
     }
 
     /**
-     * @depends test_subscribe_is_successful
+     * @test
+     * @depends its_subscribe_method_returns_true
+     * @testdox It's unsubscribe() method returns true
      */
-    public function test_unsubscribe_returns_true(EmailAddress $email)
+    public function its_unsubscribe_method_returns_true(EmailAddress $email)
     {
         $this->assertTrue($this->mailchimp_service->unsubscribe($email));
     }
 
     /**
-     * @depends test_subscribe_is_successful
+     * @test
+     * @depends its_subscribe_method_returns_true
+     * @testdox It throws an error when email address is already unsubscribed
      */
-    public function test_unsubscribe_throws_error_when_already_unsubscribed(EmailAddress $email)
+    public function it_throws_error_when_already_unsubscribed(EmailAddress $email)
     {
         $this->expectException('\Exception');
 
