@@ -4,11 +4,10 @@ namespace Arbalest\Services;
 
 use Arbalest\Values\EmailAddress;
 use Arbalest\Values\MailchimpConfig;
-use Arbalest\Values\ServiceConfig;
 use MailchimpMarketing\Api\ListsApi;
 use MailchimpMarketing\Api\PingApi;
 
-class Mailchimp extends Service
+class MailchimpList extends Service
 {
     /**
      * @var \MailchimpMarketing\Configuration

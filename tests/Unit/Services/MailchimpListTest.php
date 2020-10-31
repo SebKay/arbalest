@@ -3,11 +3,12 @@
 namespace Tests\Unit\Services;
 
 use Arbalest\Services\Mailchimp;
+use Arbalest\Services\MailchimpList;
 use Arbalest\Values\EmailAddress;
 use Arbalest\Values\MailchimpConfig;
 use \Tests\Unit\Test;
 
-class MailchimpTest extends Test
+class MailchimpListTest extends Test
 {
     /**
      * @var Mailchimp
@@ -18,7 +19,7 @@ class MailchimpTest extends Test
     {
         parent::setUp();
 
-        $this->mailchimp_service = new Mailchimp(
+        $this->mailchimp_service = new MailchimpList(
             new MailchimpConfig([
                 'apiKey'  => $_ENV['MAILCHIMP_API_KEY'],
                 'server'  => $_ENV['MAILCHIMP_SERVER'],
