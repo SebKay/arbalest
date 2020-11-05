@@ -81,7 +81,7 @@ class MailchimpList extends Service
         );
 
         try {
-            $this->lists_api->deleteListMemberWithHttpInfo($this->list_id, $subscriber_hash);
+            $this->lists_api->deleteListMember($this->list_id, $subscriber_hash);
 
             return true;
         } catch (\Exception $e) {
