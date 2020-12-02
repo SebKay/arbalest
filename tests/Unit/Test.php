@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-use Mockery;
 use PHPUnit\Framework\TestCase;
 
 abstract class Test extends TestCase
@@ -19,9 +18,5 @@ abstract class Test extends TestCase
 
         //---- Create new Faker object
         $this->faker = \Faker\Factory::create();
-    }
-
-    public function tearDown(): void {
-        Mockery::close();
     }
 }
