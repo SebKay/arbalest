@@ -13,21 +13,6 @@ class MailchimpConfigTest extends Test
 
     /**
      * @test
-     * @testdox It's get() method returns an array
-     */
-    public function its_get_method_returns_an_array()
-    {
-        $mc_config = new MailchimpConfig([
-            'apiKey'  => 'test',
-            'server'  => 'test',
-            'list_id' => 'test',
-        ]);
-
-        $this->assertIsArray($mc_config->get());
-    }
-
-    /**
-     * @test
      */
     public function it_throws_an_error_with_no_API_key()
     {
@@ -63,5 +48,21 @@ class MailchimpConfigTest extends Test
             'apiKey' => 'test',
             'server' => 'test',
         ]);
+    }
+
+    /**
+     * @test
+     */
+    public function its_get_method_returns_the_correct_data()
+    {
+        $data = [
+            'apiKey'  => 'test',
+            'server'  => 'test',
+            'list_id' => 'test',
+        ];
+
+        $config = new MailchimpConfig($data);
+
+        $this->assertSame($data, $config->get());
     }
 }

@@ -10,7 +10,11 @@
     ],
     "autoload": {
         "psr-4": {
-            "Arbalest\\": "src/",
+            "Arbalest\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Tests\\": "tests/"
         }
     },
@@ -31,7 +35,9 @@
         "phpcs" : "./vendor/bin/phpcs --standard=PSR12 ./src",
         "phpcbf": "./vendor/bin/phpcbf --standard=PSR12 src",
         "psalm" : "./vendor/bin/psalm --show-info=true",
-        "phpunit" : "./vendor/bin/phpunit --colors=always --testdox",
-        "phpunit:coverage" : "./vendor/bin/phpunit --colors=always --coverage-html coverage"
+        "phpunit" : "./vendor/bin/phpunit tests --colors=always",
+        "phpunit:testdox" : "@phpunit --testdox",
+        "phpunit:coverage" : "@phpunit --coverage-html coverage",
+        "test" : "composer phpcs && composer psalm && composer phpunit"
     }
 }
