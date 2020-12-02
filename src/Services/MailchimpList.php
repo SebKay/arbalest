@@ -24,6 +24,9 @@ class MailchimpList extends Service
      */
     protected $list_id;
 
+    /**
+     * @codeCoverageIgnore
+     */
     public function __construct(MailchimpConfig $config)
     {
         $this->config = $config;
@@ -40,6 +43,7 @@ class MailchimpList extends Service
      * Ping Mailchimp service
      *
      * @return boolean
+     * @codeCoverageIgnore
      */
     public function checkConnection(): bool
     {
@@ -53,6 +57,7 @@ class MailchimpList extends Service
      *
      * @param EmailAddress $email_address
      * @return bool
+     * @codeCoverageIgnore
      */
     public function subscribe(EmailAddress $email_address): bool
     {
@@ -73,6 +78,7 @@ class MailchimpList extends Service
      *
      * @param EmailAddress $email_address
      * @return bool
+     * @codeCoverageIgnore
      */
     public function unsubscribe(EmailAddress $email_address): bool
     {

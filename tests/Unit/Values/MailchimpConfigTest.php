@@ -6,11 +6,6 @@ use Arbalest\Values\MailchimpConfig;
 
 class MailchimpConfigTest extends Test
 {
-    public function setUp(): void
-    {
-        parent::setUp();
-    }
-
     /**
      * @test
      */

@@ -24,12 +24,14 @@ class ServiceTest extends Test
             ]
         );
 
-        $this->service = $this->getMockForAbstractClass(
+        $service_mock = $this->getMockForAbstractClass(
             \Arbalest\Services\Service::class,
             [
                 $service_config
             ]
         );
+
+        $this->service = $service_mock;
     }
 
     /**
