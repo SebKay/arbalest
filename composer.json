@@ -1,6 +1,7 @@
 {
     "name": "sebkay/arbalest",
-    "version" : "1.0.0",
+    "description": "An all-in-one, easy to use solution for sending emails with various APIs.",
+    "license": "MIT",
     "authors": [
         {
             "name": "Seb Kay",
@@ -18,9 +19,8 @@
             "Tests\\": "tests/"
         }
     },
-    "license": "MIT",
-    "require" : {
-        "php" : ">=7.2",
+    "require": {
+        "php": "^7.3",
         "mailchimp/marketing": "^3.0",
         "vlucas/phpdotenv": "^5.2",
         "fzaninotto/faker": "^1.9"
@@ -30,14 +30,12 @@
         "vimeo/psalm": "^3.12",
         "phpunit/phpunit": "^9.3"
     },
-    "scripts" : {
-        "refresh" : "git clean -xffd && composer install --ansi",
-        "phpcs" : "./vendor/bin/phpcs --standard=PSR12 ./src",
-        "phpcbf": "./vendor/bin/phpcbf --standard=PSR12 src",
-        "psalm" : "./vendor/bin/psalm --show-info=true",
-        "phpunit" : "./vendor/bin/phpunit tests --colors=always",
-        "phpunit:testdox" : "@phpunit --testdox",
-        "phpunit:coverage" : "@phpunit --coverage-html coverage",
-        "test" : "composer phpcs && composer psalm && composer phpunit"
+    "scripts": {
+        "build": "git clean -xffd -e *.env && composer install",
+        "lint": "./vendor/bin/phpcs --standard=PSR12 ./src",
+        "fix": "./vendor/bin/phpcbf --standard=PSR12 ./src",
+        "analyse": "./vendor/bin/psalm --show-info=true",
+        "test": "./vendor/bin/phpunit tests",
+        "test:coverage": "@test --coverage-html coverage"
     }
 }
