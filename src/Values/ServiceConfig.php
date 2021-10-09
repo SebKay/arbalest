@@ -15,7 +15,7 @@ abstract class ServiceConfig
 
     abstract protected function validate(): void;
 
-    public function get(string $key): mixed
+    public function get(string $key)
     {
         return $this->settings[$key] ?? null;
     }

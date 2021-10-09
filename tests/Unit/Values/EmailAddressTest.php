@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace ArbalestTests\Unit;
 
 use Arbalest\Values\EmailAddress;
 

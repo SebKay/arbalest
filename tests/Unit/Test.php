@@ -1,15 +1,12 @@
 <?php
 
-namespace Tests\Unit;
+namespace ArbalestTests\Unit;
 
 use PHPUnit\Framework\TestCase;
 
 abstract class Test extends TestCase
 {
-    /**
-     * @var \Faker\Generator
-     */
-    protected $faker;
+    protected \Faker\Generator $faker;
 
     public function setUp(): void
     {
