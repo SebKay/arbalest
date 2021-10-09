@@ -21,14 +21,14 @@
     },
     "require": {
         "php": "^7.3",
-        "mailchimp/marketing": "^3.0",
-        "vlucas/phpdotenv": "^5.2",
-        "fzaninotto/faker": "^1.9"
+        "vlucas/phpdotenv": "^5.2"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.5",
         "vimeo/psalm": "^3.12",
-        "phpunit/phpunit": "^9.3"
+        "phpunit/phpunit": "^9.3",
+        "spatie/ray": "^1.30",
+        "fzaninotto/faker": "^1.9"
     },
     "scripts": {
         "build": "git clean -xffd -e *.env && composer install",
