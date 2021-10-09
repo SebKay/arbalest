@@ -2,40 +2,25 @@
 
 namespace Arbalest\Values;
 
-use Arbalest\Interfaces\ValueObject;
-
-class EmailAddress implements ValueObject
+class EmailAddress
 {
-    /**
-     * @var string
-     */
-    protected $value;
+    protected string $emailAddress;
 
-    public function __construct(string $value)
+    public function __construct(string $emailAddress)
     {
-        $this->value = $value;
+        $this->emailAddress = $emailAddress;
 
-        if (!\filter_var($this->value, \FILTER_VALIDATE_EMAIL)) {
+        if (!\filter_var($this->emailAddress, \FILTER_VALIDATE_EMAIL)) {
             throw new \InvalidArgumentException('The email address provided is invalid');
         }
     }
 
-    /**
-     * Get email address value
-     *
-     * @return string
-     */
     public function get(): string
     {
-        return $this->value;
+        return $this->emailAddress;
     }
 
-    /**
-     * Allow object to be output as string
-     *
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->get();
     }

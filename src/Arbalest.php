@@ -2,32 +2,20 @@
 
 namespace Arbalest;
 
-use Arbalest\Interfaces\Subscribable;
 use Arbalest\Services\Service;
 use Arbalest\Values\EmailAddress;
 
 class Arbalest
 {
-    /**
-     * @var Service
-     */
-    protected $service;
+    protected Service $service;
 
-    /**
-     * Set up
-     *
-     * @param Service $service
-     */
     public function __construct(Service $service)
     {
         $this->service = $service;
     }
 
     /**
-     * Subscribe an email address to the configured service
-     *
-     * @param string $email_address
-     * @return bool
+     * Subscribe email address to configured service
      */
     public function subscribe(string $email_address): bool
     {
@@ -37,10 +25,7 @@ class Arbalest
     }
 
     /**
-     * Unsubscribe an email address from the configured service
-     *
-     * @param string $email_address
-     * @return bool
+     * Unsubscribe email address from configured service
      */
     public function unsubscribe(string $email_address): bool
     {

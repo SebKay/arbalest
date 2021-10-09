@@ -2,27 +2,21 @@
 
 namespace Arbalest\Values;
 
-use Arbalest\Interfaces\ValueObject;
-
-abstract class ServiceConfig implements ValueObject
+abstract class ServiceConfig
 {
-    /**
-     * @var array
-     */
-    protected $settings;
+    protected array $settings;
 
     public function __construct(array $settings)
     {
         $this->settings = $settings;
+
+        $this->validate();
     }
 
-    /**
-     * Get settings array
-     *
-     * @return array
-     */
-    public function get(): array
+    abstract protected function validate(): void;
+
+    public function get(string $key): mixed
     {
-        return $this->settings;
+        return $this->settings[$key] ?? null;
     }
 }
