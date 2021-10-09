@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace ArbalestTests\Unit;
 
 use Arbalest\Values\MailchimpConfig;
 
@@ -51,13 +51,15 @@ class MailchimpConfigTest extends Test
     public function its_get_method_returns_the_correct_data()
     {
         $data = [
-            'apiKey'  => 'test',
-            'server'  => 'test',
-            'list_id' => 'test',
+            'apiKey'  => 'test_api_key',
+            'server'  => 'test_server',
+            'list_id' => 'test_list_id',
         ];
 
         $config = new MailchimpConfig($data);
 
-        $this->assertSame($data, $config->get());
+        $this->assertSame('test_api_key', $config->get('apiKey'));
+        $this->assertSame('test_server', $config->get('server'));
+        $this->assertSame('test_list_id', $config->get('list_id'));
     }
 }
