@@ -20,15 +20,16 @@
         }
     },
     "require": {
-        "php": "^7.3",
-        "vlucas/phpdotenv": "^5.2"
+        "php": "^7.3 | ^8.0",
+        "vlucas/phpdotenv": "^5.2",
+        "guzzlehttp/guzzle": "^7.3"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.5",
         "vimeo/psalm": "^3.12",
         "phpunit/phpunit": "^9.3",
         "spatie/ray": "^1.30",
-        "fzaninotto/faker": "^1.9"
+        "fakerphp/faker": "^1.16"
     },
     "scripts": {
         "build": "git clean -xffd -e *.env && composer install",
