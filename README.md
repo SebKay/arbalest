@@ -49,14 +49,29 @@ try {
 }
 ```
 
-### Currently Supports
+### ConvertKit
 
-- Mailchimp
-- Campaign Monitor
+```php
+use Arbalest\Arbalest;
+use Arbalest\Services\ConvertKit;
 
-### Planned Support For
+try {
+    $arbalest = new Arbalest(
+        new ConvertKit([
+            'api_key'     => '5p8FOzuGCTumTuXe9j3_bw',
+            'api_secret'  => 'dCLBIVC60aDe2Fe8N8xem-92ZUeB_WXJlWUY3O1RfHA',
+            'form_id'     => '2677178',
+        ])
+    );
 
-- ConvertKit
+    $arbalest->subscribe('test@test.com');
+} catch (\Exception $e) {
+    // Do something on error
+}
+```
+
+### Coming Soon
+
 - Hubspot
 - ActiveCampaign
 - GetResponse
