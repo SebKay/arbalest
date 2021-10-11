@@ -21,7 +21,6 @@
     },
     "require": {
         "php": "^7.3 | ^8.0",
-        "vlucas/phpdotenv": "^5.2",
         "guzzlehttp/guzzle": "^7.3"
     },
     "require-dev": {
