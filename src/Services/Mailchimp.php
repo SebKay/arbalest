@@ -7,10 +7,7 @@ use Arbalest\Values\MailchimpConfig;
 
 class Mailchimp extends Service
 {
-    protected string $apiKey;
-    protected string $serverCode;
     protected string $listID;
-
     protected string $apiBaseUri;
 
     protected \GuzzleHttp\Client $http;
@@ -20,16 +17,13 @@ class Mailchimp extends Service
     ) {
         parent::__construct(new MailchimpConfig($config));
 
-        $this->apiKey     = $this->config->get('api_key');
-        $this->serverCode = $this->config->get('server');
         $this->listID     = $this->config->get('list_id');
-
-        $this->apiBaseUri = "https://{$this->serverCode}.api.mailchimp.com/3.0/";
+        $this->apiBaseUri = "https://{$this->config->get('server')}.api.mailchimp.com/3.0/";
 
         $this->http = new \GuzzleHttp\Client([
             'base_uri' => $this->apiBaseUri,
             'headers'  => [
-                'Authorization' => "Bearer {$this->apiKey}",
+                'Authorization' => "Bearer {$this->config->get('api_key')}",
             ],
         ]);
     }
