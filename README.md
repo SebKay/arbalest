@@ -29,13 +29,33 @@ try {
 }
 ```
 
+### Campaign Monitor
+
+```php
+use Arbalest\Arbalest;
+use Arbalest\Services\CampaignMonitor;
+
+try {
+    $arbalest = new Arbalest(
+        new CampaignMonitor([
+            'api_key'  => '12345',
+            'list_id'  => 'abcde',
+        ])
+    );
+
+    $arbalest->subscribe('test@test.com');
+} catch (\Exception $e) {
+    // Do something on error
+}
+```
+
 ### Currently Supports
 
 - Mailchimp
+- Campaign Monitor
 
 ### Planned Support For
 
-- Campaign Monitor
 - ConvertKit
 - Hubspot
 - ActiveCampaign
