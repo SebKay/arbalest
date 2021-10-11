@@ -1,20 +1,14 @@
 <?php
 
-namespace ArbalestTests\Unit;
+namespace ArbalestTests\Unit\Values;
 
 use Arbalest\Values\EmailAddress;
+use ArbalestTests\Unit\Test;
 
 class EmailAddressTest extends Test
 {
-    /**
-     * @var string
-     */
-    protected $email;
-
-    /**
-     * @var EmailAddress
-     */
-    protected $EmailAddress;
+    protected string $email;
+    protected EmailAddress $EmailAddress;
 
     public function setUp(): void
     {
@@ -26,20 +20,18 @@ class EmailAddressTest extends Test
 
     /**
      * @test
-     * @testdox It's __toString() method returns the email address
      */
-    public function its_toString_method_returns_the_email_address()
+    public function it_returns_the_correct_value()
     {
-        $this->assertSame($this->email, (string) $this->EmailAddress);
+        $this->assertSame($this->email, $this->EmailAddress->get());
     }
 
     /**
      * @test
-     * @testdox It's get() method returns the email address
      */
-    public function its_get_method_returns_the_email_address()
+    public function it_returns_the_correct_value_when_called_as_a_string()
     {
-        $this->assertSame($this->email, $this->EmailAddress->get());
+        $this->assertSame($this->email, (string) $this->EmailAddress);
     }
 
     /**
