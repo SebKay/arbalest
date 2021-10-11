@@ -17,6 +17,6 @@ abstract class ServiceConfig
 
     public function get(string $key)
     {
-        return $this->settings[$key] ?? null;
+        return $this->settings[$key] ?? '';
     }
 }
