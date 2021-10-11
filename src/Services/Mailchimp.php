@@ -21,8 +21,8 @@ class Mailchimp extends Service
         parent::__construct(new MailchimpConfig($config));
 
         $this->apiKey     = $this->config->get('api_key');
-        $this->listID     = $this->config->get('list_id');
         $this->serverCode = $this->config->get('server');
+        $this->listID     = $this->config->get('list_id');
 
         $this->apiBaseUri = "https://{$this->serverCode}.api.mailchimp.com/3.0/";
 

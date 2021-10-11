@@ -21,7 +21,8 @@
     },
     "require": {
         "php": "^7.3 | ^8.0",
-        "guzzlehttp/guzzle": "^7.3"
+        "guzzlehttp/guzzle": "^7.3",
+        "campaignmonitor/createsend-php": "^6.1"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.5",
