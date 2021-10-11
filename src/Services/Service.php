@@ -9,8 +9,9 @@ abstract class Service implements Subscribable
 {
     protected ServiceConfig $config;
 
-    public function __construct(ServiceConfig $config)
-    {
+    public function __construct(
+        ServiceConfig $config
+    ) {
         $this->config = $config;
     }
 }

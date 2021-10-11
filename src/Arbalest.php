@@ -9,16 +9,18 @@ class Arbalest
 {
     protected Service $service;
 
-    public function __construct(Service $service)
-    {
+    public function __construct(
+        Service $service
+    ) {
         $this->service = $service;
     }
 
     /**
      * Subscribe email address to configured service
      */
-    public function subscribe(string $email_address): bool
-    {
+    public function subscribe(
+        string $email_address
+    ): bool {
         return $this->service->subscribe(
             new EmailAddress($email_address)
         );
@@ -27,8 +29,9 @@ class Arbalest
     /**
      * Unsubscribe email address from configured service
      */
-    public function unsubscribe(string $email_address): bool
-    {
+    public function unsubscribe(
+        string $email_address
+    ): bool {
         return $this->service->unsubscribe(
             new EmailAddress($email_address)
         );

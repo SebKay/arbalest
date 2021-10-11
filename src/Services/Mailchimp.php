@@ -7,13 +7,17 @@ use Arbalest\Values\MailchimpConfig;
 
 class Mailchimp extends Service
 {
-    protected string $apiBaseUri;
+    protected string $apiKey;
     protected string $serverCode;
     protected string $listID;
+
+    protected string $apiBaseUri;
+
     protected \GuzzleHttp\Client $http;
 
-    public function __construct(array $config)
-    {
+    public function __construct(
+        array $config
+    ) {
         parent::__construct(new MailchimpConfig($config));
 
         $this->apiKey     = $this->config->get('api_key');
@@ -32,47 +36,39 @@ class Mailchimp extends Service
 
     /**
      * Perform a GET request
-     *
-     * @param string $url
-     * @param array $params
-     * @return \Psr\Http\Message\ResponseInterface
      */
-    protected function get(string $url, array $params = []): \Psr\Http\Message\ResponseInterface
-    {
+    protected function get(
+        string $url,
+        array $params = []
+    ): \Psr\Http\Message\ResponseInterface {
         return $this->http->get($url, $params);
     }
 
     /**
      * Perform a POST request
-     *
-     * @param string $url
-     * @param array $params
-     * @return \Psr\Http\Message\ResponseInterface
      */
-    protected function put(string $url, array $params = []): \Psr\Http\Message\ResponseInterface
-    {
+    protected function put(
+        string $url,
+        array $params = []
+    ): \Psr\Http\Message\ResponseInterface {
         return $this->http->put($url, $params);
     }
 
     /**
      * Generate a "subscriber hash" from an email address
-     *
-     * @param string $email_address
-     * @return string
      */
-    protected function subscriberHash(string $email_address): string
-    {
+    protected function subscriberHash(
+        string $email_address
+    ): string {
         return \md5(\strtolower($email_address));
     }
 
     /**
      * Check if a contact exists with the provided email address
-     *
-     * @param EmailAddress $email_address
-     * @return bool
      */
-    protected function contactExists(EmailAddress $email_address): bool
-    {
+    protected function contactExists(
+        EmailAddress $email_address
+    ): bool {
         try {
             $request = $this->get("/lists/{$this->listID}/members/{$this->subscriberHash($email_address->get())}");
 
@@ -91,13 +87,11 @@ class Mailchimp extends Service
 
     /**
      * Create or update a contact
-     *
-     * @param EmailAddress $email_address
-     * @param string $new_status
-     * @return \Psr\Http\Message\ResponseInterface
      */
-    protected function createOrUpdateContact(EmailAddress $email_address, string $new_status): \Psr\Http\Message\ResponseInterface
-    {
+    protected function createOrUpdateContact(
+        EmailAddress $email_address,
+        string $new_status
+    ): \Psr\Http\Message\ResponseInterface {
         return $this->put("lists/{$this->listID}/members/{$this->subscriberHash($email_address->get())}", [
             'json' => [
                 'email_address' => $email_address->get(),
@@ -108,12 +102,10 @@ class Mailchimp extends Service
 
     /**
      * Subscribe email address to list
-     *
-     * @param EmailAddress $email_address
-     * @return bool
      */
-    public function subscribe(EmailAddress $email_address): bool
-    {
+    public function subscribe(
+        EmailAddress $email_address
+    ): bool {
         try {
             $response = $this->createOrUpdateContact($email_address, 'subscribed');
 
@@ -123,18 +115,16 @@ class Mailchimp extends Service
 
             return false;
         } catch (\Exception $e) {
-            throw new \Exception('There was an error subscribing that email address.', $e->getCode());
+            throw new \Exception('There was an error subscribing that email address.', (int) $e->getCode());
         }
     }
 
     /**
      * Unsubscribe email address from list
-     *
-     * @param EmailAddress $email_address
-     * @return bool
      */
-    public function unsubscribe(EmailAddress $email_address): bool
-    {
+    public function unsubscribe(
+        EmailAddress $email_address
+    ): bool {
         try {
             $response = $this->createOrUpdateContact($email_address, 'unsubscribed');
 
@@ -144,7 +134,7 @@ class Mailchimp extends Service
 
             return false;
         } catch (\Exception $e) {
-            throw new \Exception('There was an error unsubscribing that email address.', $e->getCode());
+            throw new \Exception('There was an error unsubscribing that email address.', (int) $e->getCode());
         }
     }
 }
