@@ -6,8 +6,9 @@ class EmailAddress
 {
     protected string $emailAddress;
 
-    public function __construct(string $emailAddress)
-    {
+    public function __construct(
+        string $emailAddress
+    ) {
         $this->emailAddress = $emailAddress;
 
         if (!\filter_var($this->emailAddress, \FILTER_VALIDATE_EMAIL)) {

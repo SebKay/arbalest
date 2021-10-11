@@ -4,8 +4,9 @@ namespace Arbalest\Values;
 
 class MailchimpConfig extends ServiceConfig
 {
-    public function __construct(array $settings)
-    {
+    public function __construct(
+        array $settings
+    ) {
         parent::__construct($settings);
     }
 
