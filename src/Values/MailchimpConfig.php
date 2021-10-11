@@ -11,8 +11,8 @@ class MailchimpConfig extends ServiceConfig
 
     protected function validate(): void
     {
-        if (!$this->get('apiKey')) {
-            throw new \InvalidArgumentException("'apiKey' missing from configuration");
+        if (!$this->get('api_key')) {
+            throw new \InvalidArgumentException("'api_key' missing from configuration");
         }
 
         if (!$this->get('server')) {
