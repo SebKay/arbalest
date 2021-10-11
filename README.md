@@ -1,5 +1,9 @@
 # Arbalest
 
+[![PHP](https://github.com/SebKay/arbalest/actions/workflows/php.yml/badge.svg)](https://github.com/SebKay/arbalest/actions/workflows/php.yml)
+
+---
+
 ## Running Tests
 
 At the moment there are unit tests for almost every part of the code, including third party services such as Mailchimp.
