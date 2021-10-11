@@ -19,9 +19,6 @@ class CampaignMonitor extends Service
         ]);
     }
 
-    /**
-     * Subscribe email address to list
-     */
     public function subscribe(
         EmailAddress $email_address
     ): bool {
@@ -38,9 +35,6 @@ class CampaignMonitor extends Service
         }
     }
 
-    /**
-     * Unsubscribe email address from list
-     */
     public function unsubscribe(
         EmailAddress $email_address
     ): bool {
