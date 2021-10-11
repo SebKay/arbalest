@@ -45,7 +45,7 @@ class Mailchimp extends Service
     }
 
     /**
-     * Perform a POST request
+     * Perform a PUT request
      */
     protected function put(
         string $url,
@@ -57,7 +57,7 @@ class Mailchimp extends Service
     /**
      * Generate a "subscriber hash" from an email address
      */
-    protected function subscriberHash(
+    public static function subscriberHash(
         string $email_address
     ): string {
         return \md5(\strtolower($email_address));
@@ -70,7 +70,9 @@ class Mailchimp extends Service
         EmailAddress $email_address
     ): bool {
         try {
-            $request = $this->get("/lists/{$this->listID}/members/{$this->subscriberHash($email_address->get())}");
+            $subscriber_hash = self::subscriberHash($email_address->get());
+
+            $request = $this->get("/lists/{$this->listID}/members/{$subscriber_hash}");
 
             $json_response = \json_decode($request->getBody()->getContents());
             $status        = $json_response->status ?? '';
@@ -92,7 +94,9 @@ class Mailchimp extends Service
         EmailAddress $email_address,
         string $new_status
     ): \Psr\Http\Message\ResponseInterface {
-        return $this->put("lists/{$this->listID}/members/{$this->subscriberHash($email_address->get())}", [
+        $subscriber_hash = self::subscriberHash($email_address->get());
+
+        return $this->put("lists/{$this->listID}/members/{$subscriber_hash})", [
             'json' => [
                 'email_address' => $email_address->get(),
                 'status'        => $new_status,
