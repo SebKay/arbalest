@@ -7,14 +7,14 @@ use Arbalest\Values\EmailAddress;
 
 class CampaignMonitor extends Service
 {
-    protected \CS_REST_Subscribers $subscribers;
+    protected \CS_REST_Subscribers $service;
 
     public function __construct(
         array $config
     ) {
         parent::__construct(new CampaignMonitorConfig($config));
 
-        $this->subscribers = new \CS_REST_Subscribers($this->config->get('list_id'), [
+        $this->service = new \CS_REST_Subscribers($this->config->get('list_id'), [
             'api_key' => $this->config->get('api_key'),
         ]);
     }
@@ -23,7 +23,7 @@ class CampaignMonitor extends Service
         EmailAddress $email_address
     ): bool {
         try {
-            $result = $this->subscribers->add([
+            $result = $this->service->add([
                 'EmailAddress'   => $email_address->get(),
                 'ConsentToTrack' => 'yes',
                 'Resubscribe'    => true,
@@ -39,7 +39,7 @@ class CampaignMonitor extends Service
         EmailAddress $email_address
     ): bool {
         try {
-            $result = $this->subscribers->unsubscribe($email_address->get());
+            $result = $this->service->unsubscribe($email_address->get());
 
             return $result->was_successful();
         } catch (\Exception $e) {
