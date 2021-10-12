@@ -10,9 +10,29 @@ A simple all-in-one solution for managing email list subscribers in PHP.
 - Campaign Monitor ([Example](https://github.com/SebKay/arbalest/wiki/Examples#campaign-monitor))
 - ConvertKit ([Example](https://github.com/SebKay/arbalest/wiki/Examples#convertkit))
 
----
+## Installation
+
+This package is available on [Packagist](https://packagist.org/) and can be installed via [Composer](https://getcomposer.org/) like so:
+
+```shell
+composer require sebkay/arbalest
+```
 
 ## Usage
+
+First, create the `Arbalest\Arbalest` instance. This is the object you'll use to manage subscribers.
+
+Second, provide the Arbalest instance a service. For example Mailchimp (`Arbalest\Services\Mailchimp`).
+
+Then you can either subscribe or unsubscribe an email address like so:
+
+```php
+// Subscribe email address to service
+$arbalest->subscribe('test@test.com');
+
+// Unsubscribe email address from service
+$arbalest->unsubscribe('test@test.com');
+```
 
 ### Example (Mailchimp)
 
@@ -35,7 +55,38 @@ try {
 }
 ```
 
-### Coming Soon
+## Methods
+
+These are the public methods available on `Arbalest\Arbalest`.
+
+<table>
+    <tr>
+        <th>
+            Method
+        </th>
+        <th>
+            @return
+        </th>
+    </tr>
+    <tr>
+        <td>
+            <code>subscribe(string $email_address)</code>
+        </td>
+        <td>
+            <code>bool</code>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <code>unsubscribe(string $email_address)</code>
+        </td>
+        <td>
+            <code>bool</code>
+        </td>
+    </tr>
+</table>
+
+## Coming Soon
 
 - Hubspot
 - ActiveCampaign
@@ -47,31 +98,3 @@ try {
 - AWeber
 - GetResponse
 - Omnisend
-
----
-
-## Installation
-
-This package is available on [Packagist](https://packagist.org/) and can be installed via [Composer](https://getcomposer.org/) like so:
-
-```shell
-composer require sebkay/arbalest
-```
-
-After installing you can start using Arbalest in two steps.
-
-First, create the `Arbalest\Arbalest` instance, this is the main class you'll use to manage subscribers.
-
-Second, provide the Arbalest instance a service. You can see the example above where we use the Mailchimp (`Arbalest\Services\Mailchimp`) service.
-
-Then you can either subscribe or unsubscribe an email address like so:
-
-```php
-// Subscribe email address to service
-$arbalest->subscribe('test@test.com');
-
-// Unsubscribe email address to service
-$arbalest->unsubscribe('test@test.com');
-```
-
-Each of the above methods return a `boolean` (`true` on success and `false` on failure).
