@@ -90,7 +90,6 @@ These are the public methods available on `Arbalest\Arbalest`.
 ## Coming Soon
 
 - Hubspot
-- ActiveCampaign
 - GetResponse
 - Drip
 - Constant Contact
