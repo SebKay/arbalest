@@ -9,6 +9,7 @@ A simple all-in-one solution for managing email list subscribers in PHP.
 - Mailchimp ([Example](https://github.com/SebKay/arbalest/wiki/Examples#mailchimp))
 - Campaign Monitor ([Example](https://github.com/SebKay/arbalest/wiki/Examples#campaign-monitor))
 - ConvertKit ([Example](https://github.com/SebKay/arbalest/wiki/Examples#convertkit))
+- ActiveCampaign ([Example](https://github.com/SebKay/arbalest/wiki/Examples#activecampaign))
 
 ## Installation
 
