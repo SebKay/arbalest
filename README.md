@@ -4,11 +4,17 @@
 
 A simple all-in-one solution for managing email list subscribers in PHP.
 
+### Supported
+
+- Mailchimp ([Example](https://github.com/SebKay/arbalest/wiki/Examples#mailchimp))
+- Campaign Monitor ([Example](https://github.com/SebKay/arbalest/wiki/Examples#campaign-monitor))
+- ConvertKit ([Example](https://github.com/SebKay/arbalest/wiki/Examples#convertkit))
+
 ---
 
 ## Usage
 
-### Mailchimp
+### Example (Mailchimp)
 
 ```php
 use Arbalest\Arbalest;
@@ -20,47 +26,6 @@ try {
             'api_key'  => '12345',
             'server'   => 'us2',
             'list_id'  => 'abcde',
-        ])
-    );
-
-    $arbalest->subscribe('test@test.com');
-} catch (\Exception $e) {
-    // Do something on error
-}
-```
-
-### Campaign Monitor
-
-```php
-use Arbalest\Arbalest;
-use Arbalest\Services\CampaignMonitor;
-
-try {
-    $arbalest = new Arbalest(
-        new CampaignMonitor([
-            'api_key'  => '12345',
-            'list_id'  => 'abcde',
-        ])
-    );
-
-    $arbalest->subscribe('test@test.com');
-} catch (\Exception $e) {
-    // Do something on error
-}
-```
-
-### ConvertKit
-
-```php
-use Arbalest\Arbalest;
-use Arbalest\Services\ConvertKit;
-
-try {
-    $arbalest = new Arbalest(
-        new ConvertKit([
-            'api_key'     => '5p8FOzuGCTumTuXe9j3_bw',
-            'api_secret'  => 'dCLBIVC60aDe2Fe8N8xem-92ZUeB_WXJlWUY3O1RfHA',
-            'form_id'     => '2677178',
         ])
     );
 
