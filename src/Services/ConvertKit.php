@@ -11,8 +11,6 @@ class ConvertKit extends Service
     protected string $apiSecret;
     protected string $formID;
 
-    protected \GuzzleHttp\Client $http;
-
     public function __construct(
         array $config
     ) {
@@ -27,9 +25,6 @@ class ConvertKit extends Service
         ]);
     }
 
-    /**
-     * Format JSON payload for requests
-     */
     protected function formatParamsForRequest(
         array $params
     ): array {
@@ -38,26 +33,6 @@ class ConvertKit extends Service
                 'api_key' => $this->apiKey,
             ],
         ], $params);
-    }
-
-    /**
-     * Perform a POST request
-     */
-    protected function post(
-        string $url,
-        array $params = []
-    ): \Psr\Http\Message\ResponseInterface {
-        return $this->http->post($url, $this->formatParamsForRequest($params));
-    }
-
-    /**
-     * Perform a PUT request
-     */
-    protected function put(
-        string $url,
-        array $params = []
-    ): \Psr\Http\Message\ResponseInterface {
-        return $this->http->put($url, $this->formatParamsForRequest($params));
     }
 
     public function subscribe(

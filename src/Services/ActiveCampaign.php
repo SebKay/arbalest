@@ -9,8 +9,6 @@ class ActiveCampaign extends Service
 {
     protected string $listID;
 
-    protected \GuzzleHttp\Client $http;
-
     public function __construct(
         array $config
     ) {
@@ -24,16 +22,6 @@ class ActiveCampaign extends Service
                 'Api-Token' => $this->config->get('api_key'),
             ],
         ]);
-    }
-
-    /**
-     * Perform a POST request
-     */
-    protected function post(
-        string $url,
-        array $params = []
-    ): \Psr\Http\Message\ResponseInterface {
-        return $this->http->post($url, $params);
     }
 
     /**
@@ -62,6 +50,13 @@ class ActiveCampaign extends Service
         }
     }
 
+    /**
+     * Change subscribe to "subscribed" or "unsubscribed"
+     *
+     * @param EmailAddress $email_address
+     * @param int $new_status
+     * @return bool
+     */
     protected function updateContactSubcriberStatus(
         EmailAddress $email_address,
         int $new_status = 1

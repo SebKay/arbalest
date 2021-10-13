@@ -9,8 +9,6 @@ class Mailchimp extends Service
 {
     protected string $listID;
 
-    protected \GuzzleHttp\Client $http;
-
     public function __construct(
         array $config
     ) {
@@ -24,26 +22,6 @@ class Mailchimp extends Service
                 'Authorization' => "Bearer {$this->config->get('api_key')}",
             ],
         ]);
-    }
-
-    /**
-     * Perform a GET request
-     */
-    protected function get(
-        string $url,
-        array $params = []
-    ): \Psr\Http\Message\ResponseInterface {
-        return $this->http->get($url, $params);
-    }
-
-    /**
-     * Perform a PUT request
-     */
-    protected function put(
-        string $url,
-        array $params = []
-    ): \Psr\Http\Message\ResponseInterface {
-        return $this->http->put($url, $params);
     }
 
     /**
