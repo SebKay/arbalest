@@ -26,10 +26,12 @@ class Omnisend extends Service
      *
      * @param EmailAddress $email_address
      * @param bool $subscribed
-     * @return arrat
+     * @return array
      */
-    protected function arrayForEmailContact(EmailAddress $email_address, bool $subscribed = true)
-    {
+    protected function arrayForEmailContact(
+        EmailAddress $email_address,
+        bool $subscribed = true
+    ): array {
         $status = $subscribed == true ? 'subscribed' : 'unsubscribed';
 
         return [
