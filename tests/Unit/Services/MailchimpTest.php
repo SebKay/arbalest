@@ -3,7 +3,7 @@
 namespace ArbalestTests\Unit\Services;
 
 use Arbalest\Services\Mailchimp;
-use ArbalestTests\Unit\Test;
+use ArbalestTests\Test;
 
 class MailchimpTest extends Test
 {

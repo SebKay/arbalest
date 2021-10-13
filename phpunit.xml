@@ -7,8 +7,10 @@
     </coverage>
     <testsuites>
         <testsuite name="Unit">
-          <directory suffix="Test.php">./tests/Unit/</directory>
-          <exclude>./tests/Unit/Test.php</exclude>
+            <directory suffix="Test.php">./tests/Unit/</directory>
+        </testsuite>
+        <testsuite name="Integration">
+            <directory suffix="Test.php">./tests/Integration/</directory>
         </testsuite>
     </testsuites>
 </phpunit>

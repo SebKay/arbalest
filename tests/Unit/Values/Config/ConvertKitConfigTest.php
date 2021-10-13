@@ -3,7 +3,7 @@
 namespace ArbalestTests\Unit\Values;
 
 use Arbalest\Values\Configs\ConvertKitConfig;
-use ArbalestTests\Unit\Test;
+use ArbalestTests\Test;
 
 class ConvertKitConfigTest extends Test
 {
