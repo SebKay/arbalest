@@ -2,7 +2,7 @@
 
 namespace ArbalestTests\Unit\Values;
 
-use Arbalest\Values\MailchimpConfig;
+use Arbalest\Values\Configs\MailchimpConfig;
 use ArbalestTests\Unit\Test;
 
 class MailchimpConfigTest extends Test
