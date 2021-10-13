@@ -7,7 +7,7 @@ use Arbalest\Values\EmailAddress;
 
 class ActiveCampaign extends Service
 {
-    protected int $listID;
+    protected string $listID;
 
     protected \GuzzleHttp\Client $http;
 
@@ -40,7 +40,7 @@ class ActiveCampaign extends Service
      * Create or update the contact via the API
      *
      * @param EmailAddress $email_address
-     * @return bool
+     * @return int
      */
     protected function createOrUpdateContact(
         EmailAddress $email_address
