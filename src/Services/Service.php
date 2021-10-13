@@ -3,8 +3,8 @@
 namespace Arbalest\Services;
 
 use Arbalest\Interfaces\Subscribable;
+use Arbalest\Values\Configs\ServiceConfig;
 use Arbalest\Values\EmailAddress;
-use Arbalest\Values\ServiceConfig;
 
 abstract class Service implements Subscribable
 {

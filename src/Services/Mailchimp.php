@@ -2,8 +2,8 @@
 
 namespace Arbalest\Services;
 
+use Arbalest\Values\Configs\MailchimpConfig;
 use Arbalest\Values\EmailAddress;
-use Arbalest\Values\MailchimpConfig;
 
 class Mailchimp extends Service
 {

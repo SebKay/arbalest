@@ -1,6 +1,6 @@
 <?php
 
-namespace Arbalest\Values;
+namespace Arbalest\Values\Configs;
 
 class ConvertKitConfig extends ServiceConfig
 {

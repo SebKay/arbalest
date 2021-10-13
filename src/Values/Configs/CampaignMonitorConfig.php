@@ -1,8 +1,8 @@
 <?php
 
-namespace Arbalest\Values;
+namespace Arbalest\Values\Configs;
 
-class ActiveCampaignConfig extends ServiceConfig
+class CampaignMonitorConfig extends ServiceConfig
 {
     public function __construct(
         array $settings
@@ -14,10 +14,6 @@ class ActiveCampaignConfig extends ServiceConfig
     {
         if (!$this->get('api_key')) {
             throw new \InvalidArgumentException("'api_key' missing from configuration");
-        }
-
-        if (!$this->get('account_url')) {
-            throw new \InvalidArgumentException("'account_url' missing from configuration");
         }
 
         if (!$this->get('list_id')) {

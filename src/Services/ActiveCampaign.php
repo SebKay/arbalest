@@ -2,7 +2,7 @@
 
 namespace Arbalest\Services;
 
-use Arbalest\Values\ActiveCampaignConfig;
+use Arbalest\Values\Configs\ActiveCampaignConfig;
 use Arbalest\Values\EmailAddress;
 
 class ActiveCampaign extends Service

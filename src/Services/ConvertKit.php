@@ -2,7 +2,7 @@
 
 namespace Arbalest\Services;
 
-use Arbalest\Values\ConvertKitConfig;
+use Arbalest\Values\Configs\ConvertKitConfig;
 use Arbalest\Values\EmailAddress;
 
 class ConvertKit extends Service

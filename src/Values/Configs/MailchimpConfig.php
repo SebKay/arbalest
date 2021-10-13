@@ -1,8 +1,8 @@
 <?php
 
-namespace Arbalest\Values;
+namespace Arbalest\Values\Configs;
 
-class CampaignMonitorConfig extends ServiceConfig
+class MailchimpConfig extends ServiceConfig
 {
     public function __construct(
         array $settings
@@ -14,6 +14,10 @@ class CampaignMonitorConfig extends ServiceConfig
     {
         if (!$this->get('api_key')) {
             throw new \InvalidArgumentException("'api_key' missing from configuration");
+        }
+
+        if (!$this->get('server')) {
+            throw new \InvalidArgumentException("'server' missing from configuration");
         }
 
         if (!$this->get('list_id')) {

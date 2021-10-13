@@ -2,7 +2,7 @@
 
 namespace Arbalest\Services;
 
-use Arbalest\Values\CampaignMonitorConfig;
+use Arbalest\Values\Configs\CampaignMonitorConfig;
 use Arbalest\Values\EmailAddress;
 
 class CampaignMonitor extends Service

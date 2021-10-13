@@ -1,6 +1,6 @@
 <?php
 
-namespace Arbalest\Values;
+namespace Arbalest\Values\Configs;
 
 abstract class ServiceConfig
 {
