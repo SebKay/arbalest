@@ -10,6 +10,7 @@ A simple all-in-one solution for managing email list subscribers in PHP.
 - Campaign Monitor ([Example](https://github.com/SebKay/arbalest/wiki/Examples#campaign-monitor))
 - ConvertKit ([Example](https://github.com/SebKay/arbalest/wiki/Examples#convertkit))
 - ActiveCampaign ([Example](https://github.com/SebKay/arbalest/wiki/Examples#activecampaign))
+- Omnisend ([Example](https://github.com/SebKay/arbalest/wiki/Examples#omnisend))
 
 ## Installation
 
@@ -97,4 +98,3 @@ These are the public methods available on `Arbalest\Arbalest`.
 - Sendinblue
 - AWeber
 - GetResponse
-- Omnisend
