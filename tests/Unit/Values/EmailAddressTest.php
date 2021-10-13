@@ -3,7 +3,7 @@
 namespace ArbalestTests\Unit\Values;
 
 use Arbalest\Values\EmailAddress;
-use ArbalestTests\Unit\Test;
+use ArbalestTests\Test;
 
 class EmailAddressTest extends Test
 {

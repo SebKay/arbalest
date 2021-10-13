@@ -1,6 +1,6 @@
 <?php
 
-namespace ArbalestTests\Unit;
+namespace ArbalestTests;
 
 use PHPUnit\Framework\TestCase;
 
@@ -10,7 +10,6 @@ abstract class Test extends TestCase
 
     public function setUp(): void
     {
-        //---- Create new Faker object
         $this->faker = \Faker\Factory::create();
     }
 }

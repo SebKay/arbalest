@@ -3,7 +3,7 @@
 namespace ArbalestTests\Unit\Values;
 
 use Arbalest\Values\Configs\CampaignMonitorConfig;
-use ArbalestTests\Unit\Test;
+use ArbalestTests\Test;
 
 class CampaignMonitorConfigTest extends Test
 {

@@ -3,7 +3,7 @@
 namespace ArbalestTests\Unit\Values;
 
 use Arbalest\Values\Configs\MailchimpConfig;
-use ArbalestTests\Unit\Test;
+use ArbalestTests\Test;
 
 class MailchimpConfigTest extends Test
 {
