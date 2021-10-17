@@ -4,21 +4,21 @@ namespace Arbalest\Values;
 
 class EmailAddress
 {
-    protected string $emailAddress;
+    protected string $value;
 
     public function __construct(
-        string $emailAddress
+        string $value
     ) {
-        $this->emailAddress = $emailAddress;
+        $this->value = $value;
 
-        if (!\filter_var($this->emailAddress, \FILTER_VALIDATE_EMAIL)) {
+        if (!\filter_var($this->value, \FILTER_VALIDATE_EMAIL)) {
             throw new \InvalidArgumentException('The email address provided is invalid');
         }
     }
 
     public function get(): string
     {
-        return $this->emailAddress;
+        return $this->value;
     }
 
     public function __toString(): string
