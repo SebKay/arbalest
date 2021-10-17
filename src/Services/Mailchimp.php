@@ -66,10 +66,34 @@ class Mailchimp extends Service
     ): \Psr\Http\Message\ResponseInterface {
         $subscriber_hash = self::subscriberHash($email_address->get());
 
-        return $this->put("lists/{$this->listID}/members/{$subscriber_hash})", [
+        return $this->put("lists/{$this->listID}/members/{$subscriber_hash}", [
             'json' => [
                 'email_address' => $email_address->get(),
                 'status'        => $new_status,
+            ],
+        ]);
+    }
+
+    /**
+     * Create or update a contact
+     *
+     * @param EmailAddress[] $email_addresses
+     */
+    protected function createOrUpdateContacts(
+        array $email_addresses,
+        string $new_status
+    ): \Psr\Http\Message\ResponseInterface {
+        $members = \array_map(function (EmailAddress $email_address) use ($new_status) {
+            return [
+                'email_address' => $email_address->get(),
+                'status'        => $new_status,
+            ];
+        }, $email_addresses);
+
+        return $this->post("lists/{$this->listID}", [
+            'json' => [
+                'members'         => $members,
+                'update_existing' => true,
             ],
         ]);
     }
@@ -109,14 +133,12 @@ class Mailchimp extends Service
     public function subscribeAll(
         array $email_addresses
     ): bool {
-        \ray($email_addresses);
-
         try {
-            // $response = $this->createOrUpdateContact($email_address, 'subscribed');
+            $response = $this->createOrUpdateContacts($email_addresses, 'subscribed');
 
-            // if ($response->getStatusCode() == 200) {
-            //     return true;
-            // }
+            if ($response->getStatusCode() == 200) {
+                return true;
+            }
 
             return false;
         } catch (\Exception $e) {
@@ -128,15 +150,15 @@ class Mailchimp extends Service
         array $email_addresses
     ): bool {
         try {
-            // $response = $this->createOrUpdateContact($email_address, 'subscribed');
+            $response = $this->createOrUpdateContacts($email_addresses, 'unsubscribed');
 
-            // if ($response->getStatusCode() == 200) {
-            //     return true;
-            // }
+            if ($response->getStatusCode() == 200) {
+                return true;
+            }
 
             return false;
         } catch (\Exception $e) {
-            throw new \Exception('There was an error subscribing that email address.', (int) $e->getCode());
+            throw new \Exception('There was an error unsubscribing that email address.', (int) $e->getCode());
         }
     }
 }
