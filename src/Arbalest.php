@@ -36,4 +36,30 @@ class Arbalest
             new EmailAddress($email_address)
         );
     }
+
+    /**
+     * Subscribe multiple email addresses to list
+     */
+    public function subscribeAll(
+        array $email_addresses
+    ): bool {
+        return $this->service->subscribeAll(
+            \array_map(function ($email_address) {
+                return new EmailAddress($email_address);
+            }, $email_addresses)
+        );
+    }
+
+    /**
+     * Unsubscribe multiple email addresses from list
+     */
+    public function unsubscribeAll(
+        array $email_addresses
+    ): bool {
+        return $this->service->unsubscribeAll(
+            \array_map(function ($email_address) {
+                return new EmailAddress($email_address);
+            }, $email_addresses)
+        );
+    }
 }

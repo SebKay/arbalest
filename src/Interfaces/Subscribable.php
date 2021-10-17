@@ -6,11 +6,21 @@ use Arbalest\Values\EmailAddress;
 
 interface Subscribable
 {
-    public function subscribe(
-        EmailAddress $email_address
+    public function subscribe(EmailAddress $email_address): bool;
+
+    public function unsubscribe(EmailAddress $email_address): bool;
+
+    /**
+     * @param EmailAddress[] $email_addresses
+     */
+    public function subscribeAll(
+        array $email_addresses
     ): bool;
 
-    public function unsubscribe(
-        EmailAddress $email_address
+    /**
+     * @param EmailAddress[] $email_addresses
+     */
+    public function unsubscribeAll(
+        array $email_addresses
     ): bool;
 }

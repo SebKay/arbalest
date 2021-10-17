@@ -56,18 +56,4 @@ abstract class Service implements Subscribable
     ): \Psr\Http\Message\ResponseInterface {
         return $this->http->put($url, $this->formatParamsForRequest($params));
     }
-
-    /**
-     * Subscribe email address to list
-     */
-    abstract public function subscribe(
-        EmailAddress $email_address
-    ): bool;
-
-    /**
-     * Unsubscribe email address from list
-     */
-    abstract public function unsubscribe(
-        EmailAddress $email_address
-    ): bool;
 }

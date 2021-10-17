@@ -105,4 +105,38 @@ class Mailchimp extends Service
             throw new \Exception('There was an error unsubscribing that email address.', (int) $e->getCode());
         }
     }
+
+    public function subscribeAll(
+        array $email_addresses
+    ): bool {
+        \ray($email_addresses);
+
+        try {
+            // $response = $this->createOrUpdateContact($email_address, 'subscribed');
+
+            // if ($response->getStatusCode() == 200) {
+            //     return true;
+            // }
+
+            return false;
+        } catch (\Exception $e) {
+            throw new \Exception('There was an error subscribing that email address.', (int) $e->getCode());
+        }
+    }
+
+    public function unsubscribeAll(
+        array $email_addresses
+    ): bool {
+        try {
+            // $response = $this->createOrUpdateContact($email_address, 'subscribed');
+
+            // if ($response->getStatusCode() == 200) {
+            //     return true;
+            // }
+
+            return false;
+        } catch (\Exception $e) {
+            throw new \Exception('There was an error subscribing that email address.', (int) $e->getCode());
+        }
+    }
 }
