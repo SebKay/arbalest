@@ -42,8 +42,7 @@ class Mailchimp extends Service
         try {
             $subscriber_hash = self::subscriberHash($email_address->get());
 
-            $request = $this->get("/lists/{$this->listID}/members/{$subscriber_hash}");
-
+            $request       = $this->get("/lists/{$this->listID}/members/{$subscriber_hash}");
             $json_response = \json_decode($request->getBody()->getContents());
             $status        = $json_response->status ?? '';
 
@@ -104,11 +103,7 @@ class Mailchimp extends Service
         try {
             $response = $this->createOrUpdateContact($email_address, 'subscribed');
 
-            if ($response->getStatusCode() == 200) {
-                return true;
-            }
-
-            return false;
+            return $response->getStatusCode() == 200 ? true : false;
         } catch (\Exception $e) {
             throw new \Exception('There was an error subscribing that email address.', (int) $e->getCode());
         }
@@ -120,11 +115,7 @@ class Mailchimp extends Service
         try {
             $response = $this->createOrUpdateContact($email_address, 'unsubscribed');
 
-            if ($response->getStatusCode() == 200) {
-                return true;
-            }
-
-            return false;
+            return $response->getStatusCode() == 200 ? true : false;
         } catch (\Exception $e) {
             throw new \Exception('There was an error unsubscribing that email address.', (int) $e->getCode());
         }
@@ -136,11 +127,7 @@ class Mailchimp extends Service
         try {
             $response = $this->createOrUpdateContacts($email_addresses, 'subscribed');
 
-            if ($response->getStatusCode() == 200) {
-                return true;
-            }
-
-            return false;
+            return $response->getStatusCode() == 200 ? true : false;
         } catch (\Exception $e) {
             throw new \Exception('There was an error subscribing that email address.', (int) $e->getCode());
         }
@@ -152,11 +139,7 @@ class Mailchimp extends Service
         try {
             $response = $this->createOrUpdateContacts($email_addresses, 'unsubscribed');
 
-            if ($response->getStatusCode() == 200) {
-                return true;
-            }
-
-            return false;
+            return $response->getStatusCode() == 200 ? true : false;
         } catch (\Exception $e) {
             throw new \Exception('There was an error unsubscribing that email address.', (int) $e->getCode());
         }
