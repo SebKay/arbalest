@@ -72,6 +72,8 @@ class ConvertKit extends Service
         array $email_addresses
     ): bool {
         try {
+            $success = false;
+
             foreach ($this->convertArrayOfEmailAddresses($email_addresses) as $email_address) {
                 if ($this->subscribe($email_address)) {
                     $success = true;
@@ -90,6 +92,8 @@ class ConvertKit extends Service
         array $email_addresses
     ): bool {
         try {
+            $success = false;
+
             foreach ($this->convertArrayOfEmailAddresses($email_addresses) as $email_address) {
                 if ($this->unsubscribe($email_address)) {
                     $success = true;

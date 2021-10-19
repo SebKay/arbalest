@@ -68,13 +68,11 @@ abstract class Service implements Subscribable
         }, $email_addresses);
     }
 
-    /**
-     * @param EmailAddress $email_addresses
-     * @return bool
-     */
     protected function basicBulkSubscribe(
         array $email_addresses
-    ) {
+    ): bool {
+        $success = false;
+
         foreach ($this->convertArrayOfEmailAddresses($email_addresses) as $email_address) {
             if ($this->subscribe($email_address)) {
                 $success = true;
@@ -86,13 +84,11 @@ abstract class Service implements Subscribable
         return $success;
     }
 
-    /**
-     * @param EmailAddress $email_addresses
-     * @return bool
-     */
     protected function basicBulkUnsubscribe(
         array $email_addresses
-    ) {
+    ): bool {
+        $success = false;
+
         foreach ($this->convertArrayOfEmailAddresses($email_addresses) as $email_address) {
             if ($this->unsubscribe($email_address)) {
                 $success = true;
