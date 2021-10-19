@@ -125,11 +125,14 @@ class Mailchimp extends Service
         array $email_addresses
     ): bool {
         try {
-            $response = $this->createOrUpdateContacts($email_addresses, 'subscribed');
+            $response = $this->createOrUpdateContacts(
+                $this->convertArrayOfEmailAddresses($email_addresses),
+                'subscribed'
+            );
 
             return $response->getStatusCode() == 200 ? true : false;
         } catch (\Exception $e) {
-            throw new \Exception('There was an error subscribing that email address.', (int) $e->getCode());
+            throw new \Exception('There was an error subscribing those email addresses.', (int) $e->getCode());
         }
     }
 
@@ -137,11 +140,14 @@ class Mailchimp extends Service
         array $email_addresses
     ): bool {
         try {
-            $response = $this->createOrUpdateContacts($email_addresses, 'unsubscribed');
+            $response = $this->createOrUpdateContacts(
+                $this->convertArrayOfEmailAddresses($email_addresses),
+                'unsubscribed'
+            );
 
             return $response->getStatusCode() == 200 ? true : false;
         } catch (\Exception $e) {
-            throw new \Exception('There was an error unsubscribing that email address.', (int) $e->getCode());
+            throw new \Exception('There was an error unsubscribing those email addresses.', (int) $e->getCode());
         }
     }
 }
