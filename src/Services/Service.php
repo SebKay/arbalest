@@ -56,4 +56,15 @@ abstract class Service implements Subscribable
     ): \Psr\Http\Message\ResponseInterface {
         return $this->http->put($url, $this->formatParamsForRequest($params));
     }
+
+    /**
+     * @return EmailAddress[]
+     */
+    protected function convertArrayOfEmailAddresses(
+        array $email_addresses
+    ): array {
+        return \array_map(function ($email_address) {
+            return new EmailAddress($email_address);
+        }, $email_addresses);
+    }
 }
