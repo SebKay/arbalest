@@ -77,4 +77,24 @@ class Omnisend extends Service
             throw new \Exception('There was an error unsubscribing that email address.', (int) $e->getCode());
         }
     }
+
+    public function subscribeAll(
+        array $email_addresses
+    ): bool {
+        try {
+            return $this->basicBulkSubscribe($email_addresses);
+        } catch (\Exception $e) {
+            throw new \Exception('There was an error subscribing those email addresses.', (int) $e->getCode());
+        }
+    }
+
+    public function unsubscribeAll(
+        array $email_addresses
+    ): bool {
+        try {
+            return $this->basicBulkUnsubscribe($email_addresses);
+        } catch (\Exception $e) {
+            throw new \Exception('There was an error unsubscribing those email addresses.', (int) $e->getCode());
+        }
+    }
 }

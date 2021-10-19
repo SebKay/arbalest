@@ -104,17 +104,8 @@ class ActiveCampaign extends Service
         array $email_addresses
     ): bool {
         try {
-            foreach ($this->convertArrayOfEmailAddresses($email_addresses) as $email_address) {
-                if ($this->subscribe($email_address)) {
-                    $success = true;
-                } else {
-                    $success = false;
-                }
-            }
-
-            return $success;
+            return $this->basicBulkSubscribe($email_addresses);
         } catch (\Exception $e) {
-            \ray($e);
             throw new \Exception('There was an error subscribing those email addresses.', (int) $e->getCode());
         }
     }
@@ -123,15 +114,7 @@ class ActiveCampaign extends Service
         array $email_addresses
     ): bool {
         try {
-            foreach ($this->convertArrayOfEmailAddresses($email_addresses) as $email_address) {
-                if ($this->unsubscribe($email_address)) {
-                    $success = true;
-                } else {
-                    $success = false;
-                }
-            }
-
-            return $success;
+            return $this->basicBulkUnsubscribe($email_addresses);
         } catch (\Exception $e) {
             throw new \Exception('There was an error unsubscribing those email addresses.', (int) $e->getCode());
         }
