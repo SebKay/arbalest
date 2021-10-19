@@ -45,4 +45,28 @@ class ArbalestTest extends Test
     {
         $this->assertIsBool($this->app->unsubscribe($this->faker->email));
     }
+
+    /**
+     * @test
+     */
+    public function it_return_a_boolean_on_subscribe_all()
+    {
+        $this->assertIsBool($this->app->subscribeAll([
+            $this->faker->email,
+            $this->faker->email,
+            $this->faker->email,
+        ]));
+    }
+
+    /**
+     * @test
+     */
+    public function it_return_a_boolean_on_unsubscribe_all()
+    {
+        $this->assertIsBool($this->app->unsubscribeAll([
+            $this->faker->email,
+            $this->faker->email,
+            $this->faker->email,
+        ]));
+    }
 }

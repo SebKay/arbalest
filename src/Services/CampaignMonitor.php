@@ -70,6 +70,8 @@ class CampaignMonitor extends Service
         array $email_addresses
     ): bool {
         try {
+            $success = false;
+
             foreach ($this->convertArrayOfEmailAddresses($email_addresses) as $email_address) {
                 $result = $this->sdk->unsubscribe($email_address->get());
 
