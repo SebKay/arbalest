@@ -43,11 +43,7 @@ class Arbalest
     public function subscribeAll(
         array $email_addresses
     ): bool {
-        return $this->service->subscribeAll(
-            \array_map(function ($email_address) {
-                return new EmailAddress($email_address);
-            }, $email_addresses)
-        );
+        return $this->service->subscribeAll($email_addresses);
     }
 
     /**
@@ -56,10 +52,6 @@ class Arbalest
     public function unsubscribeAll(
         array $email_addresses
     ): bool {
-        return $this->service->unsubscribeAll(
-            \array_map(function ($email_address) {
-                return new EmailAddress($email_address);
-            }, $email_addresses)
-        );
+        return $this->service->unsubscribeAll($email_addresses);
     }
 }
