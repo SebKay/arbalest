@@ -73,10 +73,14 @@ class ConvertKit extends Service
     ): bool {
         try {
             foreach ($this->convertArrayOfEmailAddresses($email_addresses) as $email_address) {
-                $this->subscribe($email_address);
+                if ($this->subscribe($email_address)) {
+                    $success = true;
+                } else {
+                    $success = false;
+                }
             }
 
-            return true;
+            return $success;
         } catch (\Exception $e) {
             throw new \Exception('There was an error subscribing those email addresses.', (int) $e->getCode());
         }
@@ -87,10 +91,14 @@ class ConvertKit extends Service
     ): bool {
         try {
             foreach ($this->convertArrayOfEmailAddresses($email_addresses) as $email_address) {
-                $this->unsubscribe($email_address);
+                if ($this->unsubscribe($email_address)) {
+                    $success = true;
+                } else {
+                    $success = false;
+                }
             }
 
-            return true;
+            return $success;
         } catch (\Exception $e) {
             throw new \Exception('There was an error unsubscribing those email addresses.', (int) $e->getCode());
         }
