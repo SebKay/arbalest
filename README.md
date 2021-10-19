@@ -26,14 +26,26 @@ First, create the `Arbalest\Arbalest` instance. This is the object you'll use to
 
 Second, provide the Arbalest instance a service. For example Mailchimp (`Arbalest\Services\Mailchimp`).
 
-Then you can either subscribe or unsubscribe an email address like so:
+Then you can either subscribe or unsubscribe email addresses like so:
 
 ```php
-// Subscribe email address to service
+// Single
 $arbalest->subscribe('test@test.com');
 
-// Unsubscribe email address from service
 $arbalest->unsubscribe('test@test.com');
+
+// Multiple
+$arbalest->subscribeAll([
+    'test_1@test.com',
+    'test_2@test.com',
+    'test_3@test.com',
+]);
+
+$arbalest->unsubscribeAll([
+    'test_1@test.com',
+    'test_2@test.com',
+    'test_3@test.com',
+]);
 ```
 
 ### Example (Mailchimp)
@@ -81,6 +93,22 @@ These are the public methods available on `Arbalest\Arbalest`.
     <tr>
         <td>
             <code>unsubscribe(string $email_address)</code>
+        </td>
+        <td>
+            <code>bool</code>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <code>subscribeAll(array $email_addresses)</code>
+        </td>
+        <td>
+            <code>bool</code>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <code>unsubscribeAll(array $email_addresses)</code>
         </td>
         <td>
             <code>bool</code>
