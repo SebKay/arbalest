@@ -67,44 +67,4 @@ class ConvertKit extends Service
             throw new \Exception('There was an error unsubscribing that email address.', (int) $e->getCode());
         }
     }
-
-    public function subscribeAll(
-        array $email_addresses
-    ): bool {
-        try {
-            $success = false;
-
-            foreach ($this->convertArrayOfEmailAddresses($email_addresses) as $email_address) {
-                if ($this->subscribe($email_address)) {
-                    $success = true;
-                } else {
-                    $success = false;
-                }
-            }
-
-            return $success;
-        } catch (\Exception $e) {
-            throw new \Exception('There was an error subscribing those email addresses.', (int) $e->getCode());
-        }
-    }
-
-    public function unsubscribeAll(
-        array $email_addresses
-    ): bool {
-        try {
-            $success = false;
-
-            foreach ($this->convertArrayOfEmailAddresses($email_addresses) as $email_address) {
-                if ($this->unsubscribe($email_address)) {
-                    $success = true;
-                } else {
-                    $success = false;
-                }
-            }
-
-            return $success;
-        } catch (\Exception $e) {
-            throw new \Exception('There was an error unsubscribing those email addresses.', (int) $e->getCode());
-        }
-    }
 }

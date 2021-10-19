@@ -68,7 +68,7 @@ abstract class Service implements Subscribable
         }, $email_addresses);
     }
 
-    protected function basicBulkSubscribe(
+    public function subscribeAll(
         array $email_addresses
     ): bool {
         $success = false;
@@ -84,7 +84,7 @@ abstract class Service implements Subscribable
         return $success;
     }
 
-    protected function basicBulkUnsubscribe(
+    public function unsubscribeAll(
         array $email_addresses
     ): bool {
         $success = false;
