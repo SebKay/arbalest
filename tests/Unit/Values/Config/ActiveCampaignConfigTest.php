@@ -2,7 +2,7 @@
 
 use Arbalest\Values\Configs\ActiveCampaignConfig;
 
-test('It throws an error with no API keys', function () {
+test('It throws an error with no API key', function () {
     new ActiveCampaignConfig([
         'account_url' => 'test',
         'list_id'     => 'test',

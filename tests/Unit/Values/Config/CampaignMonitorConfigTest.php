@@ -1,51 +1,31 @@
 <?php
 
-namespace ArbalestTests\Unit\Values;
-
 use Arbalest\Values\Configs\CampaignMonitorConfig;
-use ArbalestTests\Test;
 
-class CampaignMonitorConfigTest extends Test
-{
-    /**
-     * @test
-     */
-    public function it_throws_an_error_with_no_api_key()
-    {
-        $this->expectException(\InvalidArgumentException::class);
+test('It throws an error with no API key', function () {
+    new CampaignMonitorConfig([
+        'account_url' => 'test',
+        'list_id'     => 'test',
+    ]);
+})->throws(\InvalidArgumentException::class);
 
-        new CampaignMonitorConfig([
-            'account_url' => 'test',
-            'list_id'     => 'test',
-        ]);
-    }
+test('It throws an error with no list ID', function () {
+    new CampaignMonitorConfig([
+        'api_key'     => 'test',
+        'account_url' => 'test',
+    ]);
+})->throws(\InvalidArgumentException::class);
 
-    /**
-     * @test
-     */
-    public function it_throws_an_error_with_no_list_id()
-    {
-        $this->expectException(\InvalidArgumentException::class);
+test('It returns all the settings', function () {
+    $settings = [
+        'api_key'     => 'test_api_key',
+        'list_id'     => 'test_list_id',
+        'account_url' => 'test_server',
+    ];
 
-        new CampaignMonitorConfig([
-            'api_key'     => 'test',
-            'account_url' => 'test',
-        ]);
-    }
+    $config = new CampaignMonitorConfig($settings);
 
-    /**
-     * @test
-     */
-    public function it_returns_the_correct_settings()
-    {
-        $settings = [
-            'api_key' => 'test_api_key',
-            'list_id' => 'test_list_id',
-        ];
-
-        $config = new CampaignMonitorConfig($settings);
-
-        $this->assertSame($settings['api_key'], $config->get('api_key'));
-        $this->assertSame($settings['list_id'], $config->get('list_id'));
-    }
-}
+    expect($settings['api_key'])->toBe($config->get('api_key'));
+    expect($settings['list_id'])->toBe($config->get('list_id'));
+    expect($settings['account_url'])->toBe($config->get('account_url'));
+});
