@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Arbalest\Services;
 
 use Arbalest\Interfaces\Subscribable;
@@ -16,6 +18,38 @@ abstract class Service implements Subscribable
         ServiceConfig $config
     ) {
         $this->config = $config;
+    }
+
+    public function subscribeAll(
+        array $email_addresses
+    ): bool {
+        $success = false;
+
+        foreach ($this->convertArrayOfEmailAddresses($email_addresses) as $email_address) {
+            if ($this->subscribe($email_address)) {
+                $success = true;
+            } else {
+                $success = false;
+            }
+        }
+
+        return $success;
+    }
+
+    public function unsubscribeAll(
+        array $email_addresses
+    ): bool {
+        $success = false;
+
+        foreach ($this->convertArrayOfEmailAddresses($email_addresses) as $email_address) {
+            if ($this->unsubscribe($email_address)) {
+                $success = true;
+            } else {
+                $success = false;
+            }
+        }
+
+        return $success;
     }
 
     /**
@@ -58,45 +92,13 @@ abstract class Service implements Subscribable
     }
 
     /**
-     * @return EmailAddress[]
+     * @return array<EmailAddress>
      */
     protected function convertArrayOfEmailAddresses(
         array $email_addresses
     ): array {
-        return \array_map(function ($email_address) {
+        return \array_map(static function ($email_address) {
             return new EmailAddress($email_address);
         }, $email_addresses);
-    }
-
-    public function subscribeAll(
-        array $email_addresses
-    ): bool {
-        $success = false;
-
-        foreach ($this->convertArrayOfEmailAddresses($email_addresses) as $email_address) {
-            if ($this->subscribe($email_address)) {
-                $success = true;
-            } else {
-                $success = false;
-            }
-        }
-
-        return $success;
-    }
-
-    public function unsubscribeAll(
-        array $email_addresses
-    ): bool {
-        $success = false;
-
-        foreach ($this->convertArrayOfEmailAddresses($email_addresses) as $email_address) {
-            if ($this->unsubscribe($email_address)) {
-                $success = true;
-            } else {
-                $success = false;
-            }
-        }
-
-        return $success;
     }
 }
