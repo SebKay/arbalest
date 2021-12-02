@@ -31,16 +31,16 @@ class ConvertKit extends Service
     }
 
     public function subscribe(
-        EmailAddress $email_address
+        EmailAddress $email
     ): bool {
         try {
             $response = $this->post("forms/{$this->formID}/subscribe", [
                 'json' => [
-                    'email' => $email_address->get(),
+                    'email' => $email->get(),
                 ],
             ]);
 
-            return $response->getStatusCode() === 200 ? true : false;
+            return $response->getStatusCode() === 200;
         } catch (\Exception $e) {
             throw new \Exception(
                 'There was an error subscribing that email address.',
@@ -50,17 +50,17 @@ class ConvertKit extends Service
     }
 
     public function unsubscribe(
-        EmailAddress $email_address
+        EmailAddress $email
     ): bool {
         try {
             $response = $this->put('unsubscribe', [
                 'json' => [
                     'api_secret' => $this->apiSecret,
-                    'email'      => $email_address->get(),
+                    'email'      => $email->get(),
                 ],
             ]);
 
-            return $response->getStatusCode() === 200 ? true : false;
+            return $response->getStatusCode() === 200;
         } catch (\Exception $e) {
             throw new \Exception(
                 'There was an error unsubscribing that email address.',

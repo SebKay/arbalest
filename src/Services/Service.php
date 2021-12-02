@@ -28,17 +28,11 @@ abstract class Service implements Subscribable
     public function subscribeAll(
         array $emails
     ): bool {
-        $success = false;
-
         foreach ($this->convertArrayOfEmailAddresses($emails) as $email) {
-            if ($this->subscribe($email)) {
-                $success = true;
-            } else {
-                $success = false;
-            }
+            $this->subscribe($email);
         }
 
-        return $success;
+        return true;
     }
 
     /**
@@ -47,17 +41,11 @@ abstract class Service implements Subscribable
     public function unsubscribeAll(
         array $emails
     ): bool {
-        $success = false;
-
         foreach ($this->convertArrayOfEmailAddresses($emails) as $email) {
-            if ($this->unsubscribe($email)) {
-                $success = true;
-            } else {
-                $success = false;
-            }
+            $this->unsubscribe($email);
         }
 
-        return $success;
+        return true;
     }
 
     /**
