@@ -26,16 +26,16 @@
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.5",
-        "vimeo/psalm": "^3.12",
         "phpunit/phpunit": "^9.3",
         "spatie/ray": "^1.30",
-        "fakerphp/faker": "^1.16"
+        "fakerphp/faker": "^1.16",
+        "nunomaduro/phpinsights": "^2.0"
     },
     "scripts": {
         "build": "git clean -xffd -e *.env && composer install",
         "lint": "./vendor/bin/phpcs --standard=PSR12 ./src",
         "fix": "./vendor/bin/phpcbf --standard=PSR12 ./src",
-        "analyse": "./vendor/bin/psalm --show-info=true",
+        "analyse": "./vendor/bin/phpinsights",
         "test": "./vendor/bin/phpunit tests",
         "test:coverage": "@test --coverage-html coverage"
     }
