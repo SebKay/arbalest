@@ -7,7 +7,6 @@ namespace Arbalest\Services;
 use Arbalest\Interfaces\Subscribable;
 use Arbalest\Values\Configs\ServiceConfig;
 use Arbalest\Values\EmailAddress;
-
 use Psr\Http\Message\ResponseInterface;
 
 abstract class Service implements Subscribable
