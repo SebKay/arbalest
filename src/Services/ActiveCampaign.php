@@ -10,6 +10,8 @@ use Arbalest\Values\EmailAddress;
 class ActiveCampaign extends Service
 {
     protected string $listID;
+    protected string $accountUrl;
+    protected string $apiKey;
 
     /**
      * @param array<string> $config
@@ -19,21 +21,23 @@ class ActiveCampaign extends Service
     ) {
         parent::__construct(new ActiveCampaignConfig($config));
 
-        $this->listID = $this->config->get('list_id');
+        $this->listID     = $this->config->get('list_id');
+        $this->accountUrl = $this->config->get('account_url');
+        $this->apiKey     = $this->config->get('api_key');
 
         $this->http = new \GuzzleHttp\Client([
-            'base_uri' => "{$this->config->get('account_url')}/api/3/",
+            'base_uri' => "{$this->accountUrl}/api/3/",
             'headers'  => [
-                'Api-Token' => $this->config->get('api_key'),
+                'Api-Token' => $this->apiKey,
             ],
         ]);
     }
 
     public function subscribe(
-        EmailAddress $email_address
+        EmailAddress $email
     ): bool {
         try {
-            return $this->updateContactSubcriberStatus($email_address, 1);
+            return $this->updateContactSubcriberStatus($email, 1);
         } catch (\Exception $e) {
             throw new \Exception(
                 'There was an error subscribing that email address.',
@@ -43,10 +47,10 @@ class ActiveCampaign extends Service
     }
 
     public function unsubscribe(
-        EmailAddress $email_address
+        EmailAddress $email
     ): bool {
         try {
-            return $this->updateContactSubcriberStatus($email_address, 0);
+            return $this->updateContactSubcriberStatus($email, 0);
         } catch (\Exception $e) {
             throw new \Exception(
                 'There was an error subscribing that email address.',
@@ -59,20 +63,22 @@ class ActiveCampaign extends Service
      * Create or update the contact via the API
      */
     protected function createOrUpdateContact(
-        EmailAddress $email_address
+        EmailAddress $email
     ): int {
         try {
             $response = $this->post('contact/sync', [
                 'json' => [
                     'contact' => [
-                        'email' => $email_address->get(),
+                        'email' => $email->get(),
                     ],
                 ],
-            ]);
+            ])
+                ->getBody()
+                ->getContents();
 
-            $obj = \json_decode($response->getBody()->getContents());
+            $response = \GuzzleHttp\Utils::jsonDecode($response);
 
-            return $obj->contact->id ?? 0;
+            return $response->contact->id ?? 0;
         } catch (\Exception $e) {
             throw new \Exception(
                 'There was an error creating the contact.',
@@ -85,11 +91,11 @@ class ActiveCampaign extends Service
      * Change subscribe to "subscribed" or "unsubscribed"
      */
     protected function updateContactSubcriberStatus(
-        EmailAddress $email_address,
-        int $new_status = 1
+        EmailAddress $email,
+        int $new_status
     ): bool {
         try {
-            $contact_id = $this->createOrUpdateContact($email_address);
+            $contact_id = $this->createOrUpdateContact($email);
 
             $response = $this->post('contactLists', [
                 'json' => [
@@ -101,7 +107,7 @@ class ActiveCampaign extends Service
                 ],
             ]);
 
-            return $response->getStatusCode() === 200 ? true : false;
+            return $response->getStatusCode() === 200;
         } catch (\Exception $e) {
             throw new \Exception(
                 'There was an error changing the contact list status.',
