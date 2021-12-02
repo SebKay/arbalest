@@ -11,6 +11,9 @@ class Mailchimp extends Service
 {
     protected string $listID;
 
+    /**
+     * @param array<string> $config
+     */
     public function __construct(
         array $config
     ) {
@@ -20,7 +23,7 @@ class Mailchimp extends Service
 
         $this->http = new \GuzzleHttp\Client([
             'base_uri' => "https://{$this->config->get('server')}.api.mailchimp.com/3.0/",
-            'headers' => [
+            'headers'  => [
                 'Authorization' => "Bearer {$this->config->get('api_key')}",
             ],
         ]);
@@ -59,6 +62,9 @@ class Mailchimp extends Service
         }
     }
 
+    /**
+     * @param array<string> $email_addresses
+     */
     public function subscribeAll(
         array $email_addresses
     ): bool {
@@ -74,6 +80,9 @@ class Mailchimp extends Service
         }
     }
 
+    /**
+     * @param array<string> $email_addresses
+     */
     public function unsubscribeAll(
         array $email_addresses
     ): bool {
@@ -98,9 +107,9 @@ class Mailchimp extends Service
         try {
             $subscriber_hash = self::subscriberHash($email_address->get());
 
-            $request = $this->get("/lists/{$this->listID}/members/{$subscriber_hash}");
+            $request       = $this->get("/lists/{$this->listID}/members/{$subscriber_hash}");
             $json_response = \json_decode($request->getBody()->getContents());
-            $status = $json_response->status ?? '';
+            $status        = $json_response->status ?? '';
 
             if ($status === 'subscribed') {
                 return true;
@@ -124,7 +133,7 @@ class Mailchimp extends Service
         return $this->put("lists/{$this->listID}/members/{$subscriber_hash}", [
             'json' => [
                 'email_address' => $email_address->get(),
-                'status' => $new_status,
+                'status'        => $new_status,
             ],
         ]);
     }
@@ -141,13 +150,13 @@ class Mailchimp extends Service
         $members = \array_map(static function (EmailAddress $email_address) use ($new_status) {
             return [
                 'email_address' => $email_address->get(),
-                'status' => $new_status,
+                'status'        => $new_status,
             ];
         }, $email_addresses);
 
         return $this->post("lists/{$this->listID}", [
             'json' => [
-                'members' => $members,
+                'members'         => $members,
                 'update_existing' => true,
             ],
         ]);

@@ -11,6 +11,9 @@ class CampaignMonitor extends Service
 {
     protected \CS_REST_Subscribers $sdk;
 
+    /**
+     * @param array<string> $config
+     */
     public function __construct(
         array $config
     ) {
@@ -26,9 +29,9 @@ class CampaignMonitor extends Service
     ): bool {
         try {
             $result = $this->sdk->add([
-                'EmailAddress' => $email_address->get(),
+                'EmailAddress'   => $email_address->get(),
                 'ConsentToTrack' => 'yes',
-                'Resubscribe' => true,
+                'Resubscribe'    => true,
             ]);
 
             return $result->was_successful();
@@ -49,13 +52,16 @@ class CampaignMonitor extends Service
         }
     }
 
+    /**
+     * @param array<string> $email_addresses
+     */
     public function subscribeAll(
         array $email_addresses
     ): bool {
         try {
             $email_addresses = \array_map(static function (EmailAddress $email_address) {
                 return [
-                    'EmailAddress' => $email_address->get(),
+                    'EmailAddress'   => $email_address->get(),
                     'ConsentToTrack' => 'yes',
                 ];
             }, $this->convertArrayOfEmailAddresses($email_addresses));
@@ -68,6 +74,9 @@ class CampaignMonitor extends Service
         }
     }
 
+    /**
+     * @param array<string> $email_addresses
+     */
     public function unsubscribeAll(
         array $email_addresses
     ): bool {

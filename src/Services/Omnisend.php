@@ -10,6 +10,9 @@ use DateTime;
 
 class Omnisend extends Service
 {
+    /**
+     * @param array<string> $config
+     */
     public function __construct(
         array $config
     ) {
@@ -17,7 +20,7 @@ class Omnisend extends Service
 
         $this->http = new \GuzzleHttp\Client([
             'base_uri' => 'https://api.omnisend.com/v3/',
-            'headers' => [
+            'headers'  => [
                 'X-API-KEY' => $this->config->get('api_key'),
             ],
         ]);
@@ -65,11 +68,11 @@ class Omnisend extends Service
         return [
             'identifiers' => [
                 [
-                    'type' => 'email',
-                    'id' => $email_address->get(),
+                    'type'     => 'email',
+                    'id'       => $email_address->get(),
                     'channels' => [
                         'email' => [
-                            'status' => $status,
+                            'status'     => $status,
                             'statusDate' => (new DateTime('now'))->format("Y-m-d\TH:i:s.000\Z"),
                         ],
                     ],

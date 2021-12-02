@@ -11,6 +11,9 @@ class ActiveCampaign extends Service
 {
     protected string $listID;
 
+    /**
+     * @param array<string> $config
+     */
     public function __construct(
         array $config
     ) {
@@ -20,7 +23,7 @@ class ActiveCampaign extends Service
 
         $this->http = new \GuzzleHttp\Client([
             'base_uri' => "{$this->config->get('account_url')}/api/3/",
-            'headers' => [
+            'headers'  => [
                 'Api-Token' => $this->config->get('api_key'),
             ],
         ]);
@@ -82,9 +85,9 @@ class ActiveCampaign extends Service
             $response = $this->post('contactLists', [
                 'json' => [
                     'contactList' => [
-                        'list' => $this->listID,
+                        'list'    => $this->listID,
                         'contact' => $contact_id,
-                        'status' => $new_status,
+                        'status'  => $new_status,
                     ],
                 ],
             ]);

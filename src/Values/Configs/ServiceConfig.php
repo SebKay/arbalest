@@ -9,6 +9,9 @@ abstract class ServiceConfig
     protected array $settings;
     protected array $requiredSettings = [];
 
+    /**
+     * @param array<string> $settings
+     */
     public function __construct(
         array $settings
     ) {
