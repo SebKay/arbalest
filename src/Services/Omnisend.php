@@ -36,7 +36,10 @@ class Omnisend extends Service
 
             return $response->getStatusCode() === 200 ? true : false;
         } catch (\Exception $e) {
-            throw new \Exception('There was an error subscribing that email address.', (int) $e->getCode());
+            throw new \Exception(
+                'There was an error subscribing that email address.',
+                (int) $e->getCode()
+            );
         }
     }
 
@@ -50,14 +53,17 @@ class Omnisend extends Service
 
             return $response->getStatusCode() === 200 ? true : false;
         } catch (\Exception $e) {
-            throw new \Exception('There was an error unsubscribing that email address.', (int) $e->getCode());
+            throw new \Exception(
+                'There was an error unsubscribing that email address.',
+                (int) $e->getCode()
+            );
         }
     }
 
     /**
      * Create an array for adding/updating an email contact
      *
-     * @return array
+     * @return array<string>
      */
     protected function arrayForEmailContact(
         EmailAddress $email_address,

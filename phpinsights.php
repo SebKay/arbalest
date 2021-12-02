@@ -13,7 +13,7 @@ return [
         //  ]
     ],
     'remove' => [
-        //  ExampleInsight::class,
+        NunoMaduro\PhpInsights\Domain\Insights\ForbiddenNormalClasses::class,
     ],
     'config' => [
         \PhpCsFixer\Fixer\Operator\BinaryOperatorSpacesFixer::class => [

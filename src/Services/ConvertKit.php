@@ -42,7 +42,10 @@ class ConvertKit extends Service
 
             return $response->getStatusCode() === 200 ? true : false;
         } catch (\Exception $e) {
-            throw new \Exception('There was an error subscribing that email address.', (int) $e->getCode());
+            throw new \Exception(
+                'There was an error subscribing that email address.',
+                (int) $e->getCode()
+            );
         }
     }
 
@@ -59,12 +62,17 @@ class ConvertKit extends Service
 
             return $response->getStatusCode() === 200 ? true : false;
         } catch (\Exception $e) {
-            throw new \Exception('There was an error unsubscribing that email address.', (int) $e->getCode());
+            throw new \Exception(
+                'There was an error unsubscribing that email address.',
+                (int) $e->getCode()
+            );
         }
     }
 
     /**
      * @param array<string> $params
+     *
+     * @return array<string>
      */
     protected function formatParamsForRequest(
         array $params

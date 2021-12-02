@@ -14,7 +14,9 @@ class EmailAddress
         $this->value = $value;
 
         if (! \filter_var($this->value, \FILTER_VALIDATE_EMAIL)) {
-            throw new \InvalidArgumentException('The email address provided is invalid');
+            throw new \InvalidArgumentException(
+                'The email address provided is invalid'
+            );
         }
     }
 

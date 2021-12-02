@@ -21,15 +21,15 @@ abstract class Service implements Subscribable
     }
 
     /**
-     * @param array<string> $email_addresses
+     * @param array<string> $emails
      */
     public function subscribeAll(
-        array $email_addresses
+        array $emails
     ): bool {
         $success = false;
 
-        foreach ($this->convertArrayOfEmailAddresses($email_addresses) as $email_address) {
-            if ($this->subscribe($email_address)) {
+        foreach ($this->convertArrayOfEmailAddresses($emails) as $email) {
+            if ($this->subscribe($email)) {
                 $success = true;
             } else {
                 $success = false;
@@ -40,15 +40,15 @@ abstract class Service implements Subscribable
     }
 
     /**
-     * @param array<string> $email_addresses
+     * @param array<string> $emails
      */
     public function unsubscribeAll(
-        array $email_addresses
+        array $emails
     ): bool {
         $success = false;
 
-        foreach ($this->convertArrayOfEmailAddresses($email_addresses) as $email_address) {
-            if ($this->unsubscribe($email_address)) {
+        foreach ($this->convertArrayOfEmailAddresses($emails) as $email) {
+            if ($this->unsubscribe($email)) {
                 $success = true;
             } else {
                 $success = false;
@@ -62,6 +62,8 @@ abstract class Service implements Subscribable
      * Format JSON payload for requests
      *
      * @param array<string> $params
+     *
+     * @return array<string>
      */
     protected function formatParamsForRequest(
         array $params

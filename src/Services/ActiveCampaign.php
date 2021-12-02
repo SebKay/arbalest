@@ -35,7 +35,10 @@ class ActiveCampaign extends Service
         try {
             return $this->updateContactSubcriberStatus($email_address, 1);
         } catch (\Exception $e) {
-            throw new \Exception('There was an error subscribing that email address.', (int) $e->getCode());
+            throw new \Exception(
+                'There was an error subscribing that email address.',
+                (int) $e->getCode()
+            );
         }
     }
 
@@ -45,7 +48,10 @@ class ActiveCampaign extends Service
         try {
             return $this->updateContactSubcriberStatus($email_address, 0);
         } catch (\Exception $e) {
-            throw new \Exception('There was an error subscribing that email address.', (int) $e->getCode());
+            throw new \Exception(
+                'There was an error subscribing that email address.',
+                (int) $e->getCode()
+            );
         }
     }
 
@@ -68,7 +74,10 @@ class ActiveCampaign extends Service
 
             return $obj->contact->id ?? 0;
         } catch (\Exception $e) {
-            throw new \Exception('There was an error creating the contact.', (int) $e->getCode());
+            throw new \Exception(
+                'There was an error creating the contact.',
+                (int) $e->getCode()
+            );
         }
     }
 
@@ -94,7 +103,10 @@ class ActiveCampaign extends Service
 
             return $response->getStatusCode() === 200 ? true : false;
         } catch (\Exception $e) {
-            throw new \Exception('There was an error changing the contact list status.', (int) $e->getCode());
+            throw new \Exception(
+                'There was an error changing the contact list status.',
+                (int) $e->getCode()
+            );
         }
     }
 }
