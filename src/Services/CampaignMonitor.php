@@ -10,6 +10,8 @@ use Arbalest\Values\EmailAddress;
 class CampaignMonitor extends Service
 {
     protected \CS_REST_Subscribers $sdk;
+    protected string $listID;
+    protected string $apiKey;
 
     /**
      * @param array<string> $config
@@ -19,17 +21,20 @@ class CampaignMonitor extends Service
     ) {
         parent::__construct(new CampaignMonitorConfig($config));
 
-        $this->sdk = new \CS_REST_Subscribers($this->config->get('list_id'), [
-            'api_key' => $this->config->get('api_key'),
+        $this->listID = $this->config->get('list_id');
+        $this->apiKey = $this->config->get('api_key');
+
+        $this->sdk = new \CS_REST_Subscribers($this->listID, [
+            'api_key' => $this->apiKey,
         ]);
     }
 
     public function subscribe(
-        EmailAddress $email_address
+        EmailAddress $email
     ): bool {
         try {
             $result = $this->sdk->add([
-                'EmailAddress'   => $email_address->get(),
+                'EmailAddress'   => $email->get(),
                 'ConsentToTrack' => 'yes',
                 'Resubscribe'    => true,
             ]);
@@ -44,10 +49,10 @@ class CampaignMonitor extends Service
     }
 
     public function unsubscribe(
-        EmailAddress $email_address
+        EmailAddress $email
     ): bool {
         try {
-            $result = $this->sdk->unsubscribe($email_address->get());
+            $result = $this->sdk->unsubscribe($email->get());
 
             return $result->was_successful();
         } catch (\Exception $e) {
@@ -90,19 +95,11 @@ class CampaignMonitor extends Service
         array $emails
     ): bool {
         try {
-            $success = false;
-
             foreach ($this->convertArrayOfEmailAddresses($emails) as $email) {
-                $result = $this->sdk->unsubscribe($email->get());
-
-                if ($result->was_successful()) {
-                    $success = true;
-                } else {
-                    $success = true;
-                }
+                $this->sdk->unsubscribe($email->get());
             }
 
-            return $success;
+            return true;
         } catch (\Exception $e) {
             throw new \Exception(
                 'There was an error unsubscribing those email addresses.',
