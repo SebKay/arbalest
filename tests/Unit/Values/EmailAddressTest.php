@@ -3,7 +3,9 @@
 use Arbalest\Values\EmailAddress;
 
 beforeEach(function () {
-    $this->email = 'seb@sebkay.com';
+    $faker = \Faker\Factory::create();
+
+    $this->email        = $faker->email;
     $this->EmailAddress = new EmailAddress($this->email);
 });
 
