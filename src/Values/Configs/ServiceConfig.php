@@ -6,7 +6,14 @@ namespace Arbalest\Values\Configs;
 
 abstract class ServiceConfig
 {
+    /**
+     * @var array<string>
+     */
     protected array $settings;
+
+    /**
+     * @var array<string>
+     */
     protected array $requiredSettings = [];
 
     /**
@@ -20,16 +27,18 @@ abstract class ServiceConfig
         $this->validate();
     }
 
-    final public function get(string $key): string
+    public function get(string $key): string
     {
         return $this->settings[$key] ?? '';
     }
 
-    final protected function validate(): void
+    protected function validate(): void
     {
         foreach ($this->requiredSettings as $settingKey) {
             if (! isset($this->settings[$settingKey])) {
-                throw new \InvalidArgumentException("'{$settingKey}' is missing from configuration");
+                throw new \InvalidArgumentException(
+                    "'{$settingKey}' is missing from configuration"
+                );
             }
         }
     }

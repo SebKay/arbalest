@@ -6,6 +6,9 @@ namespace Arbalest\Values\Configs;
 
 class ActiveCampaignConfig extends ServiceConfig
 {
+    /**
+     * @var array<string>
+     */
     protected array $requiredSettings = [
         'api_key',
         'account_url',

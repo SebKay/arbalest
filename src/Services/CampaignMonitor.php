@@ -36,7 +36,10 @@ class CampaignMonitor extends Service
 
             return $result->was_successful();
         } catch (\Exception $e) {
-            throw new \Exception('There was an error subscribing that email address.', (int) $e->getCode());
+            throw new \Exception(
+                'There was an error subscribing that email address.',
+                (int) $e->getCode()
+            );
         }
     }
 
@@ -48,43 +51,49 @@ class CampaignMonitor extends Service
 
             return $result->was_successful();
         } catch (\Exception $e) {
-            throw new \Exception('There was an error unsubscribing that email address.', (int) $e->getCode());
+            throw new \Exception(
+                'There was an error unsubscribing that email address.',
+                (int) $e->getCode()
+            );
         }
     }
 
     /**
-     * @param array<string> $email_addresses
+     * @param array<string> $emails
      */
     public function subscribeAll(
-        array $email_addresses
+        array $emails
     ): bool {
         try {
-            $email_addresses = \array_map(static function (EmailAddress $email_address) {
+            $emails = \array_map(static function (EmailAddress $email) {
                 return [
-                    'EmailAddress'   => $email_address->get(),
+                    'EmailAddress'   => $email->get(),
                     'ConsentToTrack' => 'yes',
                 ];
-            }, $this->convertArrayOfEmailAddresses($email_addresses));
+            }, $this->convertArrayOfEmailAddresses($emails));
 
-            $result = $this->sdk->import($email_addresses, true);
+            $result = $this->sdk->import($emails, true);
 
             return $result->was_successful();
         } catch (\Exception $e) {
-            throw new \Exception('There was an error subscribing those email addresses.', (int) $e->getCode());
+            throw new \Exception(
+                'There was an error subscribing those email addresses.',
+                (int) $e->getCode()
+            );
         }
     }
 
     /**
-     * @param array<string> $email_addresses
+     * @param array<string> $emails
      */
     public function unsubscribeAll(
-        array $email_addresses
+        array $emails
     ): bool {
         try {
             $success = false;
 
-            foreach ($this->convertArrayOfEmailAddresses($email_addresses) as $email_address) {
-                $result = $this->sdk->unsubscribe($email_address->get());
+            foreach ($this->convertArrayOfEmailAddresses($emails) as $email) {
+                $result = $this->sdk->unsubscribe($email->get());
 
                 if ($result->was_successful()) {
                     $success = true;
@@ -95,7 +104,10 @@ class CampaignMonitor extends Service
 
             return $success;
         } catch (\Exception $e) {
-            throw new \Exception('There was an error unsubscribing those email addresses.', (int) $e->getCode());
+            throw new \Exception(
+                'There was an error unsubscribing those email addresses.',
+                (int) $e->getCode()
+            );
         }
     }
 }
