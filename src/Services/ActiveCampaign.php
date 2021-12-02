@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Arbalest\Services;
 
 use Arbalest\Values\Configs\ActiveCampaignConfig;
@@ -18,17 +20,34 @@ class ActiveCampaign extends Service
 
         $this->http = new \GuzzleHttp\Client([
             'base_uri' => "{$this->config->get('account_url')}/api/3/",
-            'headers'  => [
+            'headers' => [
                 'Api-Token' => $this->config->get('api_key'),
             ],
         ]);
     }
 
+    public function subscribe(
+        EmailAddress $email_address
+    ): bool {
+        try {
+            return $this->updateContactSubcriberStatus($email_address, 1);
+        } catch (\Exception $e) {
+            throw new \Exception('There was an error subscribing that email address.', (int) $e->getCode());
+        }
+    }
+
+    public function unsubscribe(
+        EmailAddress $email_address
+    ): bool {
+        try {
+            return $this->updateContactSubcriberStatus($email_address, 0);
+        } catch (\Exception $e) {
+            throw new \Exception('There was an error subscribing that email address.', (int) $e->getCode());
+        }
+    }
+
     /**
      * Create or update the contact via the API
-     *
-     * @param EmailAddress $email_address
-     * @return int
      */
     protected function createOrUpdateContact(
         EmailAddress $email_address
@@ -52,10 +71,6 @@ class ActiveCampaign extends Service
 
     /**
      * Change subscribe to "subscribed" or "unsubscribed"
-     *
-     * @param EmailAddress $email_address
-     * @param int $new_status
-     * @return bool
      */
     protected function updateContactSubcriberStatus(
         EmailAddress $email_address,
@@ -67,36 +82,16 @@ class ActiveCampaign extends Service
             $response = $this->post('contactLists', [
                 'json' => [
                     'contactList' => [
-                        'list'    => $this->listID,
+                        'list' => $this->listID,
                         'contact' => $contact_id,
-                        'status'  => $new_status,
+                        'status' => $new_status,
                     ],
                 ],
             ]);
 
-            return $response->getStatusCode() == 200 ? true : false;
+            return $response->getStatusCode() === 200 ? true : false;
         } catch (\Exception $e) {
             throw new \Exception('There was an error changing the contact list status.', (int) $e->getCode());
-        }
-    }
-
-    public function subscribe(
-        EmailAddress $email_address
-    ): bool {
-        try {
-            return $this->updateContactSubcriberStatus($email_address, 1);
-        } catch (\Exception $e) {
-            throw new \Exception('There was an error subscribing that email address.', (int) $e->getCode());
-        }
-    }
-
-    public function unsubscribe(
-        EmailAddress $email_address
-    ): bool {
-        try {
-            return $this->updateContactSubcriberStatus($email_address, 0);
-        } catch (\Exception $e) {
-            throw new \Exception('There was an error subscribing that email address.', (int) $e->getCode());
         }
     }
 }

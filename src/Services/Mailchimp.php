@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Arbalest\Services;
 
 use Arbalest\Values\Configs\MailchimpConfig;
@@ -18,7 +20,7 @@ class Mailchimp extends Service
 
         $this->http = new \GuzzleHttp\Client([
             'base_uri' => "https://{$this->config->get('server')}.api.mailchimp.com/3.0/",
-            'headers'  => [
+            'headers' => [
                 'Authorization' => "Bearer {$this->config->get('api_key')}",
             ],
         ]);
@@ -33,6 +35,60 @@ class Mailchimp extends Service
         return \md5(\strtolower($email_address));
     }
 
+    public function subscribe(
+        EmailAddress $email_address
+    ): bool {
+        try {
+            $response = $this->createOrUpdateContact($email_address, 'subscribed');
+
+            return $response->getStatusCode() === 200 ? true : false;
+        } catch (\Exception $e) {
+            throw new \Exception('There was an error subscribing that email address.', (int) $e->getCode());
+        }
+    }
+
+    public function unsubscribe(
+        EmailAddress $email_address
+    ): bool {
+        try {
+            $response = $this->createOrUpdateContact($email_address, 'unsubscribed');
+
+            return $response->getStatusCode() === 200 ? true : false;
+        } catch (\Exception $e) {
+            throw new \Exception('There was an error unsubscribing that email address.', (int) $e->getCode());
+        }
+    }
+
+    public function subscribeAll(
+        array $email_addresses
+    ): bool {
+        try {
+            $response = $this->createOrUpdateContacts(
+                $this->convertArrayOfEmailAddresses($email_addresses),
+                'subscribed'
+            );
+
+            return $response->getStatusCode() === 200 ? true : false;
+        } catch (\Exception $e) {
+            throw new \Exception('There was an error subscribing those email addresses.', (int) $e->getCode());
+        }
+    }
+
+    public function unsubscribeAll(
+        array $email_addresses
+    ): bool {
+        try {
+            $response = $this->createOrUpdateContacts(
+                $this->convertArrayOfEmailAddresses($email_addresses),
+                'unsubscribed'
+            );
+
+            return $response->getStatusCode() === 200 ? true : false;
+        } catch (\Exception $e) {
+            throw new \Exception('There was an error unsubscribing those email addresses.', (int) $e->getCode());
+        }
+    }
+
     /**
      * Check if a contact exists with the provided email address
      */
@@ -42,11 +98,11 @@ class Mailchimp extends Service
         try {
             $subscriber_hash = self::subscriberHash($email_address->get());
 
-            $request       = $this->get("/lists/{$this->listID}/members/{$subscriber_hash}");
+            $request = $this->get("/lists/{$this->listID}/members/{$subscriber_hash}");
             $json_response = \json_decode($request->getBody()->getContents());
-            $status        = $json_response->status ?? '';
+            $status = $json_response->status ?? '';
 
-            if ($status == 'subscribed') {
+            if ($status === 'subscribed') {
                 return true;
             }
 
@@ -68,7 +124,7 @@ class Mailchimp extends Service
         return $this->put("lists/{$this->listID}/members/{$subscriber_hash}", [
             'json' => [
                 'email_address' => $email_address->get(),
-                'status'        => $new_status,
+                'status' => $new_status,
             ],
         ]);
     }
@@ -76,78 +132,24 @@ class Mailchimp extends Service
     /**
      * Create or update a contact
      *
-     * @param EmailAddress[] $email_addresses
+     * @param array<EmailAddress> $email_addresses
      */
     protected function createOrUpdateContacts(
         array $email_addresses,
         string $new_status
     ): \Psr\Http\Message\ResponseInterface {
-        $members = \array_map(function (EmailAddress $email_address) use ($new_status) {
+        $members = \array_map(static function (EmailAddress $email_address) use ($new_status) {
             return [
                 'email_address' => $email_address->get(),
-                'status'        => $new_status,
+                'status' => $new_status,
             ];
         }, $email_addresses);
 
         return $this->post("lists/{$this->listID}", [
             'json' => [
-                'members'         => $members,
+                'members' => $members,
                 'update_existing' => true,
             ],
         ]);
-    }
-
-    public function subscribe(
-        EmailAddress $email_address
-    ): bool {
-        try {
-            $response = $this->createOrUpdateContact($email_address, 'subscribed');
-
-            return $response->getStatusCode() == 200 ? true : false;
-        } catch (\Exception $e) {
-            throw new \Exception('There was an error subscribing that email address.', (int) $e->getCode());
-        }
-    }
-
-    public function unsubscribe(
-        EmailAddress $email_address
-    ): bool {
-        try {
-            $response = $this->createOrUpdateContact($email_address, 'unsubscribed');
-
-            return $response->getStatusCode() == 200 ? true : false;
-        } catch (\Exception $e) {
-            throw new \Exception('There was an error unsubscribing that email address.', (int) $e->getCode());
-        }
-    }
-
-    public function subscribeAll(
-        array $email_addresses
-    ): bool {
-        try {
-            $response = $this->createOrUpdateContacts(
-                $this->convertArrayOfEmailAddresses($email_addresses),
-                'subscribed'
-            );
-
-            return $response->getStatusCode() == 200 ? true : false;
-        } catch (\Exception $e) {
-            throw new \Exception('There was an error subscribing those email addresses.', (int) $e->getCode());
-        }
-    }
-
-    public function unsubscribeAll(
-        array $email_addresses
-    ): bool {
-        try {
-            $response = $this->createOrUpdateContacts(
-                $this->convertArrayOfEmailAddresses($email_addresses),
-                'unsubscribed'
-            );
-
-            return $response->getStatusCode() == 200 ? true : false;
-        } catch (\Exception $e) {
-            throw new \Exception('There was an error unsubscribing those email addresses.', (int) $e->getCode());
-        }
     }
 }

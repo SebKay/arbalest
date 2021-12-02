@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Arbalest\Interfaces;
 
 use Arbalest\Values\EmailAddress;
@@ -11,14 +13,14 @@ interface Subscribable
     public function unsubscribe(EmailAddress $email_address): bool;
 
     /**
-     * @param EmailAddress[] $email_addresses
+     * @param array<EmailAddress> $email_addresses
      */
     public function subscribeAll(
         array $email_addresses
     ): bool;
 
     /**
-     * @param EmailAddress[] $email_addresses
+     * @param array<EmailAddress> $email_addresses
      */
     public function unsubscribeAll(
         array $email_addresses

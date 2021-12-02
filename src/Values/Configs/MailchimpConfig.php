@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Arbalest\Values\Configs;
 
 class MailchimpConfig extends ServiceConfig

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Arbalest;
 
 use Arbalest\Services\Service;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Arbalest\Services;
 
 use Arbalest\Values\Configs\CampaignMonitorConfig;
@@ -24,9 +26,9 @@ class CampaignMonitor extends Service
     ): bool {
         try {
             $result = $this->sdk->add([
-                'EmailAddress'   => $email_address->get(),
+                'EmailAddress' => $email_address->get(),
                 'ConsentToTrack' => 'yes',
-                'Resubscribe'    => true,
+                'Resubscribe' => true,
             ]);
 
             return $result->was_successful();
@@ -51,9 +53,9 @@ class CampaignMonitor extends Service
         array $email_addresses
     ): bool {
         try {
-            $email_addresses = \array_map(function (EmailAddress $email_address) {
+            $email_addresses = \array_map(static function (EmailAddress $email_address) {
                 return [
-                    'EmailAddress'   => $email_address->get(),
+                    'EmailAddress' => $email_address->get(),
                     'ConsentToTrack' => 'yes',
                 ];
             }, $this->convertArrayOfEmailAddresses($email_addresses));
