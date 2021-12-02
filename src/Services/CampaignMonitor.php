@@ -33,13 +33,13 @@ class CampaignMonitor extends Service
         EmailAddress $email
     ): bool {
         try {
-            $result = $this->sdk->add([
-                'EmailAddress'   => $email->get(),
-                'ConsentToTrack' => 'yes',
-                'Resubscribe'    => true,
-            ]);
-
-            return $result->was_successful();
+            return $this->sdk
+                ->add([
+                    'EmailAddress'   => $email->get(),
+                    'ConsentToTrack' => 'yes',
+                    'Resubscribe'    => true,
+                ])
+                ->was_successful();
         } catch (\Exception $e) {
             throw new \Exception(
                 'There was an error subscribing that email address.',
@@ -52,9 +52,9 @@ class CampaignMonitor extends Service
         EmailAddress $email
     ): bool {
         try {
-            $result = $this->sdk->unsubscribe($email->get());
-
-            return $result->was_successful();
+            return $this->sdk
+                ->unsubscribe($email->get())
+                ->was_successful();
         } catch (\Exception $e) {
             throw new \Exception(
                 'There was an error unsubscribing that email address.',
@@ -77,9 +77,9 @@ class CampaignMonitor extends Service
                 ];
             }, $this->convertArrayOfEmailAddresses($emails));
 
-            $result = $this->sdk->import($emails, true);
-
-            return $result->was_successful();
+            return $this->sdk
+                ->import($emails, true)
+                ->was_successful();
         } catch (\Exception $e) {
             throw new \Exception(
                 'There was an error subscribing those email addresses.',
