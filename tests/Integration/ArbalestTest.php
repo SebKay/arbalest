@@ -1,72 +1,47 @@
 <?php
 
-namespace ArbalestTests\Integration;
-
 use Arbalest\Arbalest;
 use Arbalest\Services\Service;
-use ArbalestTests\Test;
 
-class ArbalestTest extends Test
-{
-    protected Arbalest $app;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        /**
-         * @var Service|\PHPUnit\Framework\MockObject\Stub
-         */
-        $service_mock = $this->createStub(Service::class);
-
-        $service_mock
-            ->method('subscribe')
-            ->willReturn(true);
-
-        $service_mock
-            ->method('unsubscribe')
-            ->willReturn(true);
-
-        $this->app = new Arbalest($service_mock);
-    }
+beforeEach(function () {
+    $this->faker = \Faker\Factory::create();
 
     /**
-     * @test
+     * @var Service|\PHPUnit\Framework\MockObject\Stub
      */
-    public function it_return_a_boolean_on_subscribe()
-    {
-        $this->assertIsBool($this->app->subscribe($this->faker->email));
-    }
+    $service_mock = $this->createStub(Service::class);
 
-    /**
-     * @test
-     */
-    public function it_return_a_boolean_on_unsubscribe()
-    {
-        $this->assertIsBool($this->app->unsubscribe($this->faker->email));
-    }
+    $service_mock
+        ->method('subscribe')
+        ->willReturn(true);
 
-    /**
-     * @test
-     */
-    public function it_return_a_boolean_on_subscribe_all()
-    {
-        $this->assertIsBool($this->app->subscribeAll([
-            $this->faker->email,
-            $this->faker->email,
-            $this->faker->email,
-        ]));
-    }
+    $service_mock
+        ->method('unsubscribe')
+        ->willReturn(true);
 
-    /**
-     * @test
-     */
-    public function it_return_a_boolean_on_unsubscribe_all()
-    {
-        $this->assertIsBool($this->app->unsubscribeAll([
-            $this->faker->email,
-            $this->faker->email,
-            $this->faker->email,
-        ]));
-    }
-}
+    $this->app = new Arbalest($service_mock);
+});
+
+test('It returns a true boolean when subscribing an email address', function () {
+    expect($this->app->subscribe($this->faker->email))->toBeBool();
+});
+
+test('It returns a true boolean when unsubscribing an email address', function () {
+    expect($this->app->unsubscribe($this->faker->email))->toBeBool();
+});
+
+test('It returns a true boolean when subscribing multiple email addresses', function () {
+    expect($this->app->subscribeAll([
+        $this->faker->email,
+        $this->faker->email,
+        $this->faker->email,
+    ]))->toBeBool();
+});
+
+test('It returns a true boolean when unsubscribing multiple email addresses', function () {
+    expect($this->app->unsubscribeAll([
+        $this->faker->email,
+        $this->faker->email,
+        $this->faker->email,
+    ]))->toBeBool();
+});
