@@ -35,7 +35,7 @@
         "build": "git clean -xffd -e *.env && composer install",
         "lint": "./vendor/bin/phpcs --standard=PSR12 ./src",
         "fix": "./vendor/bin/phpcbf --standard=PSR12 ./src",
-        "analyse": "./vendor/bin/phpinsights analyse src -v",
+        "analyse": "./vendor/bin/phpinsights --no-interaction --min-quality=90 --min-complexity=80 --min-architecture=90 --min-style=90 -v",
         "test": "./vendor/bin/pest",
         "test:coverage": "@test --coverage-html coverage",
         "test:coverage:check": "@test --coverage --min=90"
