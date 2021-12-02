@@ -6,10 +6,11 @@ namespace Arbalest\Services;
 
 use Arbalest\Values\Configs\OmnisendConfig;
 use Arbalest\Values\EmailAddress;
-use DateTime;
 
 class Omnisend extends Service
 {
+    protected string $apiKey;
+
     /**
      * @param array<string> $config
      */
@@ -18,23 +19,25 @@ class Omnisend extends Service
     ) {
         parent::__construct(new OmnisendConfig($config));
 
+        $this->apiKey = $this->config->get('api_key');
+
         $this->http = new \GuzzleHttp\Client([
             'base_uri' => 'https://api.omnisend.com/v3/',
             'headers'  => [
-                'X-API-KEY' => $this->config->get('api_key'),
+                'X-API-KEY' => $this->apiKey,
             ],
         ]);
     }
 
     public function subscribe(
-        EmailAddress $email_address
+        EmailAddress $email
     ): bool {
         try {
             $response = $this->post('contacts', [
-                'json' => $this->arrayForEmailContact($email_address, true),
+                'json' => $this->arrayForEmailContact($email, true),
             ]);
 
-            return $response->getStatusCode() === 200 ? true : false;
+            return $response->getStatusCode() === 200;
         } catch (\Exception $e) {
             throw new \Exception(
                 'There was an error subscribing that email address.',
@@ -44,14 +47,14 @@ class Omnisend extends Service
     }
 
     public function unsubscribe(
-        EmailAddress $email_address
+        EmailAddress $email
     ): bool {
         try {
             $response = $this->post('contacts', [
-                'json' => $this->arrayForEmailContact($email_address, false),
+                'json' => $this->arrayForEmailContact($email, false),
             ]);
 
-            return $response->getStatusCode() === 200 ? true : false;
+            return $response->getStatusCode() === 200;
         } catch (\Exception $e) {
             throw new \Exception(
                 'There was an error unsubscribing that email address.',
@@ -66,8 +69,8 @@ class Omnisend extends Service
      * @return array<string>
      */
     protected function arrayForEmailContact(
-        EmailAddress $email_address,
-        bool $subscribed = true
+        EmailAddress $email,
+        bool $subscribed
     ): array {
         $status = $subscribed === true ? 'subscribed' : 'unsubscribed';
 
@@ -75,11 +78,11 @@ class Omnisend extends Service
             'identifiers' => [
                 [
                     'type'     => 'email',
-                    'id'       => $email_address->get(),
+                    'id'       => $email->get(),
                     'channels' => [
                         'email' => [
                             'status'     => $status,
-                            'statusDate' => (new DateTime('now'))->format("Y-m-d\TH:i:s.000\Z"),
+                            'statusDate' => (new \DateTime('now'))->format("Y-m-d\TH:i:s.000\Z"),
                         ],
                     ],
                 ],
