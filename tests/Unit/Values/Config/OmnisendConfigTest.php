@@ -1,33 +1,17 @@
 <?php
 
-namespace ArbalestTests\Unit\Values;
-
 use Arbalest\Values\Configs\OmnisendConfig;
-use ArbalestTests\Test;
 
-class OmnisendConfigTest extends Test
-{
-    /**
-     * @test
-     */
-    public function it_throws_an_error_with_no_api_key()
-    {
-        $this->expectException(\InvalidArgumentException::class);
+test('It throws an error with no API key', function () {
+    new OmnisendConfig([]);
+})->throws(\InvalidArgumentException::class);
 
-        new OmnisendConfig([]);
-    }
+test('It returns all the settings', function () {
+    $settings = [
+        'api_key' => 'test_api_key',
+    ];
 
-    /**
-     * @test
-     */
-    public function it_returns_the_correct_settings()
-    {
-        $settings = [
-            'api_key' => 'test_api_key',
-        ];
+    $config = new OmnisendConfig($settings);
 
-        $config = new OmnisendConfig($settings);
-
-        $this->assertSame($settings['api_key'], $config->get('api_key'));
-    }
-}
+    expect($settings['api_key'])->toBe($config->get('api_key'));
+});
