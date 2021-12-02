@@ -8,6 +8,8 @@ use Arbalest\Interfaces\Subscribable;
 use Arbalest\Values\Configs\ServiceConfig;
 use Arbalest\Values\EmailAddress;
 
+use Psr\Http\Message\ResponseInterface;
+
 abstract class Service implements Subscribable
 {
     protected ServiceConfig $config;
@@ -79,7 +81,7 @@ abstract class Service implements Subscribable
     protected function get(
         string $url,
         array $params = []
-    ): \Psr\Http\Message\ResponseInterface {
+    ): ResponseInterface {
         return $this->http->get($url, $this->formatParamsForRequest($params));
     }
 
@@ -91,7 +93,7 @@ abstract class Service implements Subscribable
     protected function post(
         string $url,
         array $params = []
-    ): \Psr\Http\Message\ResponseInterface {
+    ): ResponseInterface {
         return $this->http->post($url, $this->formatParamsForRequest($params));
     }
 
@@ -103,7 +105,7 @@ abstract class Service implements Subscribable
     protected function put(
         string $url,
         array $params = []
-    ): \Psr\Http\Message\ResponseInterface {
+    ): ResponseInterface {
         return $this->http->put($url, $this->formatParamsForRequest($params));
     }
 
