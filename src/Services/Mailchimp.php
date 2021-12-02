@@ -6,6 +6,7 @@ namespace Arbalest\Services;
 
 use Arbalest\Values\Configs\MailchimpConfig;
 use Arbalest\Values\EmailAddress;
+use Psr\Http\Message\ResponseInterface;
 
 class Mailchimp extends Service
 {
@@ -48,7 +49,7 @@ class Mailchimp extends Service
         try {
             $response = $this->createOrUpdateContact($email, 'subscribed');
 
-            return $response->getStatusCode() === 200 ? true : false;
+            return $response->getStatusCode() === 200;
         } catch (\Exception $e) {
             throw new \Exception(
                 'There was an error subscribing that email address.',
@@ -63,7 +64,7 @@ class Mailchimp extends Service
         try {
             $response = $this->createOrUpdateContact($email, 'unsubscribed');
 
-            return $response->getStatusCode() === 200 ? true : false;
+            return $response->getStatusCode() === 200;
         } catch (\Exception $e) {
             throw new \Exception(
                 'There was an error unsubscribing that email address.',
@@ -73,18 +74,18 @@ class Mailchimp extends Service
     }
 
     /**
-     * @param array<string> $email_addresses
+     * @param array<string> $emails
      */
     public function subscribeAll(
-        array $email_addresses
+        array $emails
     ): bool {
         try {
             $response = $this->createOrUpdateContacts(
-                $this->convertArrayOfEmailAddresses($email_addresses),
+                $this->convertArrayOfEmailAddresses($emails),
                 'subscribed'
             );
 
-            return $response->getStatusCode() === 200 ? true : false;
+            return $response->getStatusCode() === 200;
         } catch (\Exception $e) {
             throw new \Exception(
                 'There was an error subscribing those email addresses.',
@@ -94,18 +95,18 @@ class Mailchimp extends Service
     }
 
     /**
-     * @param array<string> $email_addresses
+     * @param array<string> $emails
      */
     public function unsubscribeAll(
-        array $email_addresses
+        array $emails
     ): bool {
         try {
             $response = $this->createOrUpdateContacts(
-                $this->convertArrayOfEmailAddresses($email_addresses),
+                $this->convertArrayOfEmailAddresses($emails),
                 'unsubscribed'
             );
 
-            return $response->getStatusCode() === 200 ? true : false;
+            return $response->getStatusCode() === 200;
         } catch (\Exception $e) {
             throw new \Exception(
                 'There was an error unsubscribing those email addresses.',
@@ -115,40 +116,17 @@ class Mailchimp extends Service
     }
 
     /**
-     * Check if a contact exists with the provided email address
-     */
-    protected function contactExists(
-        EmailAddress $email_address
-    ): bool {
-        try {
-            $hash = self::subscriberHash($email_address->get());
-
-            $request  = $this->get("/lists/{$this->listID}/members/{$hash}");
-            $response = \json_decode($request->getBody()->getContents());
-            $status   = $response->status ?? '';
-
-            if ($status === 'subscribed') {
-                return true;
-            }
-
-            return false;
-        } catch (\GuzzleHttp\Exception\ClientException $e) {
-            return false;
-        }
-    }
-
-    /**
      * Create or update a contact
      */
     protected function createOrUpdateContact(
-        EmailAddress $email_address,
+        EmailAddress $email,
         string $new_status
-    ): \Psr\Http\Message\ResponseInterface {
-        $subscriber_hash = self::subscriberHash($email_address->get());
+    ): ResponseInterface {
+        $hash = self::subscriberHash($email->get());
 
-        return $this->put("lists/{$this->listID}/members/{$subscriber_hash}", [
+        return $this->put("lists/{$this->listID}/members/{$hash}", [
             'json' => [
-                'email_address' => $email_address->get(),
+                'email_address' => $email->get(),
                 'status'        => $new_status,
             ],
         ]);
@@ -157,10 +135,10 @@ class Mailchimp extends Service
     /**
      * Create or update a contact
      *
-     * @param array<EmailAddress> $email_addresses
+     * @param array<EmailAddress> $emails
      */
     protected function createOrUpdateContacts(
-        array $email_addresses,
+        array $emails,
         string $new_status
     ): \Psr\Http\Message\ResponseInterface {
         $members = \array_map(
@@ -170,7 +148,7 @@ class Mailchimp extends Service
                     'status'        => $new_status,
                 ];
             },
-            $email_addresses
+            $emails
         );
 
         return $this->post("lists/{$this->listID}", [
