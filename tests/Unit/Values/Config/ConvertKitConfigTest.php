@@ -1,66 +1,38 @@
 <?php
 
-namespace ArbalestTests\Unit\Values;
-
 use Arbalest\Values\Configs\ConvertKitConfig;
-use ArbalestTests\Test;
 
-class ConvertKitConfigTest extends Test
-{
-    /**
-     * @test
-     */
-    public function it_throws_an_error_with_no_api_key()
-    {
-        $this->expectException(\InvalidArgumentException::class);
+test('It throws an error with no API key', function () {
+    new ConvertKitConfig([
+        'api_secret' => 'test',
+        'form_id'    => 'test',
+    ]);
+})->throws(\InvalidArgumentException::class);
 
-        new ConvertKitConfig([
-            'api_secret' => 'test',
-            'form_id'    => 'test',
-        ]);
-    }
+test('It throws an error with no API secret', function () {
+    new ConvertKitConfig([
+        'api_key' => 'test',
+        'form_id' => 'test',
+    ]);
+})->throws(\InvalidArgumentException::class);
 
-    /**
-     * @test
-     */
-    public function it_throws_an_error_with_no_api_secret()
-    {
-        $this->expectException(\InvalidArgumentException::class);
+test('It throws an error with no form ID', function () {
+    new ConvertKitConfig([
+        'api_key'    => 'test',
+        'api_secret' => 'test',
+    ]);
+})->throws(\InvalidArgumentException::class);
 
-        new ConvertKitConfig([
-            'api_key' => 'test',
-            'form_id' => 'test',
-        ]);
-    }
+test('It returns all the settings', function () {
+    $settings = [
+        'api_key'    => 'test_api_key',
+        'api_secret' => 'test_api_secret',
+        'form_id'    => 'test_form_id',
+    ];
 
-    /**
-     * @test
-     */
-    public function it_throws_an_error_with_no_form_id()
-    {
-        $this->expectException(\InvalidArgumentException::class);
+    $config = new ConvertKitConfig($settings);
 
-        new ConvertKitConfig([
-            'api_key'    => 'test',
-            'api_secret' => 'test',
-        ]);
-    }
-
-    /**
-     * @test
-     */
-    public function it_returns_the_correct_settings()
-    {
-        $settings = [
-            'api_key'    => 'test_api_key',
-            'api_secret' => 'test_api_secret',
-            'form_id'    => 'test_form_id',
-        ];
-
-        $config = new ConvertKitConfig($settings);
-
-        $this->assertSame($settings['api_key'], $config->get('api_key'));
-        $this->assertSame($settings['api_secret'], $config->get('api_secret'));
-        $this->assertSame($settings['form_id'], $config->get('form_id'));
-    }
-}
+    expect($settings['api_key'])->toBe($config->get('api_key'));
+    expect($settings['api_secret'])->toBe($config->get('api_secret'));
+    expect($settings['form_id'])->toBe($config->get('form_id'));
+});
