@@ -1,66 +1,38 @@
 <?php
 
-namespace ArbalestTests\Unit\Values;
-
 use Arbalest\Values\Configs\ActiveCampaignConfig;
-use ArbalestTests\Test;
 
-class ActiveCampaignConfigTest extends Test
-{
-    /**
-     * @test
-     */
-    public function it_throws_an_error_with_no_api_key()
-    {
-        $this->expectException(\InvalidArgumentException::class);
+test('It throws an error with no API keys', function () {
+    new ActiveCampaignConfig([
+        'account_url' => 'test',
+        'list_id'     => 'test',
+    ]);
+})->throws(\InvalidArgumentException::class);
 
-        new ActiveCampaignConfig([
-            'account_url' => 'test',
-            'list_id'     => 'test',
-        ]);
-    }
+test('It throws an error with no account URL', function () {
+    new ActiveCampaignConfig([
+        'api_key'  => 'test',
+        'list_id'  => 'test',
+    ]);
+})->throws(\InvalidArgumentException::class);
 
-    /**
-     * @test
-     */
-    public function it_throws_an_error_with_no_account_url()
-    {
-        $this->expectException(\InvalidArgumentException::class);
+test('It throws an error with no list ID', function () {
+    new ActiveCampaignConfig([
+        'api_key'     => 'test',
+        'account_url' => 'test',
+    ]);
+})->throws(\InvalidArgumentException::class);
 
-        new ActiveCampaignConfig([
-            'api_key'  => 'test',
-            'list_id'  => 'test',
-        ]);
-    }
+test('It returns all the settings', function () {
+    $settings = [
+        'api_key'     => 'test_api_key',
+        'account_url' => 'test_server',
+        'list_id'     => 'test_list_id',
+    ];
 
-    /**
-     * @test
-     */
-    public function it_throws_an_error_with_no_list_id()
-    {
-        $this->expectException(\InvalidArgumentException::class);
+    $config = new ActiveCampaignConfig($settings);
 
-        new ActiveCampaignConfig([
-            'api_key'     => 'test',
-            'account_url' => 'test',
-        ]);
-    }
-
-    /**
-     * @test
-     */
-    public function it_returns_the_correct_settings()
-    {
-        $settings = [
-            'api_key'     => 'test_api_key',
-            'account_url' => 'test_server',
-            'list_id'     => 'test_list_id',
-        ];
-
-        $config = new ActiveCampaignConfig($settings);
-
-        $this->assertSame($settings['api_key'], $config->get('api_key'));
-        $this->assertSame($settings['account_url'], $config->get('account_url'));
-        $this->assertSame($settings['list_id'], $config->get('list_id'));
-    }
-}
+    expect($settings['api_key'])->toBe($config->get('api_key'));
+    expect($settings['account_url'])->toBe($config->get('account_url'));
+    expect($settings['list_id'])->toBe($config->get('list_id'));
+});
