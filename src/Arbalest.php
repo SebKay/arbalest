@@ -21,10 +21,10 @@ class Arbalest
      * Subscribe email address to configured service
      */
     public function subscribe(
-        string $email_address
+        string $email
     ): bool {
         return $this->service->subscribe(
-            new EmailAddress($email_address)
+            new EmailAddress($email)
         );
     }
 
@@ -32,32 +32,32 @@ class Arbalest
      * Unsubscribe email address from configured service
      */
     public function unsubscribe(
-        string $email_address
+        string $email
     ): bool {
         return $this->service->unsubscribe(
-            new EmailAddress($email_address)
+            new EmailAddress($email)
         );
     }
 
     /**
-     * Subscribe multiple email addresses to list
+     * Subscribe multiple email addresses to configured service
      *
-     * @param array<string> $email_addresses
+     * @param array<string> $emails
      */
     public function subscribeAll(
-        array $email_addresses
+        array $emails
     ): bool {
-        return $this->service->subscribeAll($email_addresses);
+        return $this->service->subscribeAll($emails);
     }
 
     /**
-     * Unsubscribe multiple email addresses from list
+     * Unsubscribe multiple email addresses from configured service
      *
-     * @param array<string> $email_addresses
+     * @param array<string> $emails
      */
     public function unsubscribeAll(
-        array $email_addresses
+        array $emails
     ): bool {
-        return $this->service->unsubscribeAll($email_addresses);
+        return $this->service->unsubscribeAll($emails);
     }
 }

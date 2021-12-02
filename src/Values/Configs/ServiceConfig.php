@@ -9,7 +9,7 @@ abstract class ServiceConfig
     /**
      * @var array<string>
      */
-    protected array $settings;
+    protected array $settings = [];
 
     /**
      * @var array<string>
