@@ -29,7 +29,8 @@
         "phpunit/phpunit": "^9.3",
         "spatie/ray": "^1.30",
         "fakerphp/faker": "^1.16",
-        "nunomaduro/phpinsights": "^2.0"
+        "nunomaduro/phpinsights": "^2.0",
+        "pestphp/pest": "^1.21"
     },
     "scripts": {
         "build": "git clean -xffd -e *.env && composer install",
