@@ -13,14 +13,17 @@ class ConvertKit extends Service
     protected string $apiSecret;
     protected string $formID;
 
+    /**
+     * @param array<string> $config
+     */
     public function __construct(
         array $config
     ) {
         parent::__construct(new ConvertKitConfig($config));
 
-        $this->apiKey = $this->config->get('api_key');
+        $this->apiKey    = $this->config->get('api_key');
         $this->apiSecret = $this->config->get('api_secret');
-        $this->formID = $this->config->get('form_id');
+        $this->formID    = $this->config->get('form_id');
 
         $this->http = new \GuzzleHttp\Client([
             'base_uri' => 'https://api.convertkit.com/v3/',
@@ -50,7 +53,7 @@ class ConvertKit extends Service
             $response = $this->put('unsubscribe', [
                 'json' => [
                     'api_secret' => $this->apiSecret,
-                    'email' => $email_address->get(),
+                    'email'      => $email_address->get(),
                 ],
             ]);
 
@@ -60,6 +63,9 @@ class ConvertKit extends Service
         }
     }
 
+    /**
+     * @param array<string> $params
+     */
     protected function formatParamsForRequest(
         array $params
     ): array {

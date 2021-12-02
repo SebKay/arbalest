@@ -20,6 +20,9 @@ abstract class Service implements Subscribable
         $this->config = $config;
     }
 
+    /**
+     * @param array<string> $email_addresses
+     */
     public function subscribeAll(
         array $email_addresses
     ): bool {
@@ -36,6 +39,9 @@ abstract class Service implements Subscribable
         return $success;
     }
 
+    /**
+     * @param array<string> $email_addresses
+     */
     public function unsubscribeAll(
         array $email_addresses
     ): bool {
@@ -54,6 +60,8 @@ abstract class Service implements Subscribable
 
     /**
      * Format JSON payload for requests
+     *
+     * @param array<string> $params
      */
     protected function formatParamsForRequest(
         array $params
@@ -63,6 +71,8 @@ abstract class Service implements Subscribable
 
     /**
      * Perform a GET request
+     *
+     * @param array<string> $params
      */
     protected function get(
         string $url,
@@ -73,6 +83,8 @@ abstract class Service implements Subscribable
 
     /**
      * Perform a POST request
+     *
+     * @param array<string> $params
      */
     protected function post(
         string $url,
@@ -83,6 +95,8 @@ abstract class Service implements Subscribable
 
     /**
      * Perform a PUT request
+     *
+     * @param array<string> $params
      */
     protected function put(
         string $url,
@@ -92,6 +106,10 @@ abstract class Service implements Subscribable
     }
 
     /**
+     * Convert an array of email string to value objects
+     *
+     * @param array<string> $email_addresses
+     *
      * @return array<EmailAddress>
      */
     protected function convertArrayOfEmailAddresses(

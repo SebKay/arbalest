@@ -41,6 +41,8 @@ class Arbalest
 
     /**
      * Subscribe multiple email addresses to list
+     *
+     * @param array<string> $email_addresses
      */
     public function subscribeAll(
         array $email_addresses
@@ -50,6 +52,8 @@ class Arbalest
 
     /**
      * Unsubscribe multiple email addresses from list
+     *
+     * @param array<string> $email_addresses
      */
     public function unsubscribeAll(
         array $email_addresses
