@@ -1,46 +1,20 @@
 <?php
 
-namespace ArbalestTests\Unit\Values;
-
 use Arbalest\Values\EmailAddress;
-use ArbalestTests\Test;
 
-class EmailAddressTest extends Test
-{
-    protected string $email;
-    protected EmailAddress $EmailAddress;
+beforeEach(function () {
+    $this->email = 'seb@sebkay.com';
+    $this->EmailAddress = new EmailAddress($this->email);
+});
 
-    public function setUp(): void
-    {
-        parent::setUp();
+test('It returns the correct value', function () {
+    expect($this->email)->toBe($this->EmailAddress->get());
+});
 
-        $this->email        = $this->faker->email;
-        $this->EmailAddress = new EmailAddress($this->email);
-    }
+test('It returns the correct value when called as a string', function () {
+    expect($this->email)->toBe((string) $this->EmailAddress);
+});
 
-    /**
-     * @test
-     */
-    public function it_returns_the_correct_value()
-    {
-        $this->assertSame($this->email, $this->EmailAddress->get());
-    }
-
-    /**
-     * @test
-     */
-    public function it_returns_the_correct_value_when_called_as_a_string()
-    {
-        $this->assertSame($this->email, (string) $this->EmailAddress);
-    }
-
-    /**
-     * @test
-     */
-    public function it_throws_an_error_for_an_invalid_email_address()
-    {
-        $this->expectException(\InvalidArgumentException::class);
-
-        new EmailAddress('test');
-    }
-}
+test('It throws an error for an invalid email address', function () {
+    new EmailAddress('test');
+})->throws(\InvalidArgumentException::class);
